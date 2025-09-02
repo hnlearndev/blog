@@ -1,6 +1,7 @@
 // Import sub-modules
 mod about;
 mod home;
+mod icons;
 mod nav;
 
 use leptos::prelude::*;
@@ -40,6 +41,7 @@ pub fn App() -> impl IntoView {
         // injects a stylesheet into the document <head>
         // id=leptos means cargo-leptos will hot-reload this stylesheet
         <Stylesheet id="leptos" href="/pico.min.css"/>
+        <Stylesheet id="nav-styles" href="/nav-styles.css"/>
 
         // sets the document title
         <Title text="Welcome to Willian's tech blog"/>
