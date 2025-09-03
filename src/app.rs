@@ -1,5 +1,5 @@
 // Import sub-modules
-mod about;
+mod helpers;
 mod home;
 mod icons;
 mod nav;
@@ -54,7 +54,6 @@ pub fn App() -> impl IntoView {
             <main class="container">
                 <Routes fallback=|| "Page not found.".into_view()>
                     <Route path=StaticSegment("") view=home::HomePage/>
-                    <Route path=StaticSegment("/about") view=about::About/>
                 </Routes>
             </main>
         </Router>
