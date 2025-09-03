@@ -1,9 +1,12 @@
 // Import sub-modules
+mod footer;
 mod helpers;
 mod home;
 mod icons;
 mod nav;
+pub mod subscribe_form;
 
+// Import necessary crates and modules
 use leptos::prelude::*;
 use leptos_meta::{MetaTags, Stylesheet, Title, provide_meta_context};
 use leptos_router::{
@@ -22,11 +25,11 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
                 <meta name="description" content="Willian's personal website" />
                 <meta name="color-scheme" content="light dark" />
                 <AutoReload options=options.clone() />
-                <HydrationScripts options/>
-                <MetaTags/>
+                <HydrationScripts options />
+                <MetaTags />
             </head>
             <body>
-                <App/>
+                <App />
             </body>
         </html>
     }
@@ -38,24 +41,29 @@ pub fn App() -> impl IntoView {
     provide_meta_context();
 
     view! {
-        // injects a stylesheet into the document <head>
-        // id=leptos means cargo-leptos will hot-reload this stylesheet
-        <Stylesheet id="leptos" href="/pico.min.css"/>
-        <Stylesheet id="nav-styles" href="/nav-styles.css"/>
+        <Stylesheet id="leptos" href="/pico.min.css" />
+        <Stylesheet id="nav-styles" href="/nav-styles.css" />
+        <Stylesheet id="footer-styles" href="/footer-styles.css" />
 
-        // sets the document title
-        <Title text="Welcome to Willian's tech blog"/>
+        <Title text="Welcome to Willian's tech blog" />
 
-        // content for this welcome page
         <Router>
+            // Navigation bar
             <header class="container">
-                <nav::Nav/>
+                <nav::Nav />
             </header>
+
+            // Main content area with routing
             <main class="container">
                 <Routes fallback=|| "Page not found.".into_view()>
-                    <Route path=StaticSegment("") view=home::HomePage/>
+                    <Route path=StaticSegment("") view=home::HomePage />
                 </Routes>
             </main>
+
+            // Footer section
+            <footer class="container">
+                <footer::Footer />
+            </footer>
         </Router>
     }
 }

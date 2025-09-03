@@ -19,7 +19,13 @@ pub fn Nav() -> impl IntoView {
             // Left side - Brand/Logo
             <div class="nav-brand">
                 <FastA href="/" class="brand-link">
-                    <img src="/favicon.ico" alt="Brand Logo" width="32" height="32" style="vertical-align: middle; margin-right: 0.5rem;" />
+                    <img
+                        src="/favicon.ico"
+                        alt="Brand Logo"
+                        width="32"
+                        height="32"
+                        style="vertical-align: middle; margin-right: 0.5rem;"
+                    />
                     <strong>"Willian Nguyen"</strong>
                 </FastA>
             </div>
@@ -29,21 +35,27 @@ pub fn Nav() -> impl IntoView {
                 <ul class="nav-links">
                     <li class="nav-item">
                         <FastA href="/blog" class="nav-link">
-                            <div class="nav-icon"><BlogIcon /></div>
+                            <div class="nav-icon">
+                                <BlogIcon />
+                            </div>
                             <span>"Blog"</span>
                         </FastA>
                     </li>
 
                     <li class="nav-item">
                         <FastA href="/projects" class="nav-link">
-                            <div class="nav-icon"><ProjectIcon /></div>
+                            <div class="nav-icon">
+                                <ProjectIcon />
+                            </div>
                             <span>"Projects"</span>
                         </FastA>
                     </li>
 
                     <li class="nav-item">
                         <FastA href="/resume" class="nav-link">
-                            <div class="nav-icon"><ResumeIcon /></div>
+                            <div class="nav-icon">
+                                <ResumeIcon />
+                            </div>
                             <span>"Resume"</span>
                         </FastA>
                     </li>
@@ -51,16 +63,32 @@ pub fn Nav() -> impl IntoView {
 
                 // Contact/Social Media Icons
                 <div class="nav-social">
-                    <a href="https://github.com/hnlearndev" target="_blank" class="social-link" title="GitHub">
-                        <div class="social-icon"><GitHubIcon /></div>
+                    <a
+                        href="https://github.com/hnlearndev"
+                        target="_blank"
+                        class="social-link"
+                        title="GitHub"
+                    >
+                        <div class="social-icon">
+                            <GitHubIcon />
+                        </div>
                     </a>
 
-                    <a href="https://www.linkedin.com/in/hieunthello/" target="_blank" class="social-link" title="LinkedIn">
-                        <div class="social-icon"><LinkedInIcon /></div>
+                    <a
+                        href="https://www.linkedin.com/in/hieunthello/"
+                        target="_blank"
+                        class="social-link"
+                        title="LinkedIn"
+                    >
+                        <div class="social-icon">
+                            <LinkedInIcon />
+                        </div>
                     </a>
 
                     <a href="mailto:hieunt.hello@gmail.com" class="social-link" title="Email">
-                        <div class="social-icon"><ContactIcon /></div>
+                        <div class="social-icon">
+                            <ContactIcon />
+                        </div>
                     </a>
                 </div>
             </div>
@@ -77,17 +105,20 @@ pub fn Nav() -> impl IntoView {
             </button>
 
             // Mobile Menu
-            <div
-                class=move || format!("mobile-menu {}",
-                    if mobile_menu_open.get() { "mobile-menu-open" } else { "" }
+            <div class=move || {
+                format!(
+                    "mobile-menu {}",
+                    if mobile_menu_open.get() { "mobile-menu-open" } else { "" },
                 )
-            >
+            }>
                 <div class="mobile-menu-content">
                     <ul class="mobile-nav-links">
                         <li class="mobile-nav-item">
                             <div on:click=close_mobile_menu>
                                 <FastA href="/blog" class="mobile-nav-link">
-                                    <div class="mobile-nav-icon"><BlogIcon /></div>
+                                    <div class="mobile-nav-icon">
+                                        <BlogIcon />
+                                    </div>
                                     <span>"Blog"</span>
                                 </FastA>
                             </div>
@@ -95,7 +126,9 @@ pub fn Nav() -> impl IntoView {
                         <li class="mobile-nav-item">
                             <div on:click=close_mobile_menu>
                                 <FastA href="/projects" class="mobile-nav-link">
-                                    <div class="mobile-nav-icon"><ProjectIcon /></div>
+                                    <div class="mobile-nav-icon">
+                                        <ProjectIcon />
+                                    </div>
                                     <span>"Projects"</span>
                                 </FastA>
                             </div>
@@ -103,7 +136,9 @@ pub fn Nav() -> impl IntoView {
                         <li class="mobile-nav-item">
                             <div on:click=close_mobile_menu>
                                 <FastA href="/resume" class="mobile-nav-link">
-                                    <div class="mobile-nav-icon"><ResumeIcon /></div>
+                                    <div class="mobile-nav-icon">
+                                        <ResumeIcon />
+                                    </div>
                                     <span>"Resume"</span>
                                 </FastA>
                             </div>
@@ -112,16 +147,30 @@ pub fn Nav() -> impl IntoView {
 
                     // Social Media in Mobile Menu
                     <div class="mobile-nav-social">
-                        <a href="https://github.com/hnlearndev" target="_blank" class="mobile-social-link">
-                            <div class="mobile-social-icon"><GitHubIcon /></div>
+                        <a
+                            href="https://github.com/hnlearndev"
+                            target="_blank"
+                            class="mobile-social-link"
+                        >
+                            <div class="mobile-social-icon">
+                                <GitHubIcon />
+                            </div>
                             <span>"GitHub"</span>
                         </a>
-                        <a href="https://www.linkedin.com/in/hieunthello/" target="_blank" class="mobile-social-link">
-                            <div class="mobile-social-icon"><LinkedInIcon /></div>
+                        <a
+                            href="https://www.linkedin.com/in/hieunthello/"
+                            target="_blank"
+                            class="mobile-social-link"
+                        >
+                            <div class="mobile-social-icon">
+                                <LinkedInIcon />
+                            </div>
                             <span>"LinkedIn"</span>
                         </a>
                         <a href="mailto:hieunt.hello@gmail.com" class="mobile-social-link">
-                            <div class="mobile-social-icon"><ContactIcon /></div>
+                            <div class="mobile-social-icon">
+                                <ContactIcon />
+                            </div>
                             <span>"Email"</span>
                         </a>
                     </div>
