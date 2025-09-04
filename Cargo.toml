@@ -24,13 +24,14 @@ garde = { version = "0.22.0", features = ["derive", "email"] }
 gloo-net = { version = "0.6.0", optional = true }
 serde_json = { version = "1.0", optional = true }
 web-sys = { version = "0.3", optional = true, features = ["Window", "Navigator", "console"] }
-wasm-bindgen-futures = { version = "0.4", optional = true }
+wasm-bindgen-futures = { version = "0.4.50", optional = true }
 dotenvy = { version = "0.15", optional = true }
 lucide-leptos = { version = "2.32.0", features = ["all-icons"] }
 tower_governor = { version = "0.8.0", optional = true }
 tower = { version = "0.5.2", features = ["timeout"], optional = true }
-tower-http = { version = "0.6.6", features = ["cors"], optional = true }
+tower-http = { version = "0.6.6", features = ["cors", "compression-br", "timeout"], optional = true }
 tracing = { version = "0.1", optional = true }
+tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter", "json"] }
 axum-extra = { version = "0.10.1", features = ["cookie"], optional = true }
 rand = { version = "0.9.2", optional = true }
 base64 = { version = "0.22", optional = true }

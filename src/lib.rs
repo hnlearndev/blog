@@ -1,8 +1,7 @@
 pub mod app;
+pub mod client;
 
 #[cfg(feature = "ssr")]
 pub mod server;
-
-pub mod client;
 
 pub mod shared;

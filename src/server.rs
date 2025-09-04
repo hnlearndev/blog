@@ -1,42 +1,37 @@
 // Declare module structure for the server-side application
-
-// Database modules
 pub mod db;
-
-// Model modules
-pub mod models;
-
-// Handler modules
 pub mod handlers;
-
-// Service modules
+pub mod middleware;
+pub mod models;
+pub mod repositories;
+pub mod routes;
 pub mod services;
 
-// Repository modules
-pub mod repositories;
-
-// Route modules
-pub mod routes;
-
-// Middleware modules
-pub mod middleware;
-
 // Import necessary crates and modules
-use crate::server::db::{config, pool, state::AppState};
-use crate::server::middleware::request_logger::request_logger;
-use crate::server::middleware::cors::cors_layer;
-use crate::server::middleware::security_headers::security_headers;
-use crate::server::routes::subscriber::subscriber_routes;
-use axum::{Router, middleware::from_fn};
-use leptos::logging::log;
+use crate::server::{
+    db::{config, pool, state::AppState},
+    middleware::global_layer::{cors::cors_layer, security_headers::security_headers},
+    routes::subscriber::subscriber_routes,
+};
+use axum::{middleware::from_fn, Router};
 use leptos::prelude::*;
 use leptos_axum::{LeptosRoutes, generate_route_list};
+use std::time::Duration;
+use tower_http::timeout::TimeoutLayer;
+use tower_http::compression::CompressionLayer;
+use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberInitExt};
 
 /// Main server run function - called by main.rs
 #[cfg(feature = "ssr")]
 pub async fn run() {
     // Load environment variables from .env file
     dotenvy::dotenv().ok();
+
+    // Initialize tracing subscriber for logging
+    tracing_subscriber::registry()
+        .with(EnvFilter::from_default_env())
+        .with(fmt::layer().json().pretty()) // use .pretty() for dev
+        .init();
 
     // Get Leptos configuration
     let conf = get_configuration(None).unwrap();
@@ -57,7 +52,8 @@ pub async fn run() {
 
     // Build the Axum router with Leptos integration and subscriber API
     let app = Router::new()
-        .layer(from_fn(request_logger))
+        .layer(CompressionLayer::new())
+        .layer(TimeoutLayer::new(Duration::from_secs(10)))
         .layer(cors_layer())
         .layer(from_fn(security_headers))
         .leptos_routes(&leptos_options, routes, {
@@ -69,7 +65,6 @@ pub async fn run() {
         .merge(subscriber_routes().with_state(app_state));
 
     // Start the server
-    log!("🚀 Server starting on http://{}", &addr);
     let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
     axum::serve(listener, app.into_make_service())
         .await
