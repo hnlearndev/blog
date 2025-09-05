@@ -1,16 +1,16 @@
 use super::helpers::FastA;
 use super::icons::*;
-use leptos::prelude::*;
+use leptos::{ev::MouseEvent, prelude::*};
 
 #[component]
 pub fn Nav() -> impl IntoView {
     let (mobile_menu_open, set_mobile_menu_open) = signal(false);
 
-    let toggle_mobile_menu = move |_| {
+    let toggle_mobile_menu = move |_: MouseEvent| {
         set_mobile_menu_open.update(|open| *open = !*open);
     };
 
-    let close_mobile_menu = move |_| {
+    let _close_mobile_menu = move |_: MouseEvent| {
         set_mobile_menu_open.set(false);
     };
 
@@ -32,34 +32,34 @@ pub fn Nav() -> impl IntoView {
 
             // Right side - Desktop Navigation
             <div class="nav-desktop">
-                <ul class="nav-links">
-                    <li class="nav-item">
-                        <FastA href="/blog" class="nav-link">
-                            <div class="nav-icon">
-                                <BlogIcon />
-                            </div>
-                            <span>"Blog"</span>
-                        </FastA>
-                    </li>
+            //     <ul class="nav-links">
+            //         <li class="nav-item">
+            //             <FastA href="/blog" class="nav-link">
+            //                 <div class="nav-icon">
+            //                     <BlogIcon />
+            //                 </div>
+            //                 <span>"Blog"</span>
+            //             </FastA>
+            //         </li>
 
-                    <li class="nav-item">
-                        <FastA href="/projects" class="nav-link">
-                            <div class="nav-icon">
-                                <ProjectIcon />
-                            </div>
-                            <span>"Projects"</span>
-                        </FastA>
-                    </li>
+            //         <li class="nav-item">
+            //             <FastA href="/projects" class="nav-link">
+            //                 <div class="nav-icon">
+            //                     <ProjectIcon />
+            //                 </div>
+            //                 <span>"Projects"</span>
+            //             </FastA>
+            //         </li>
 
-                    <li class="nav-item">
-                        <FastA href="/resume" class="nav-link">
-                            <div class="nav-icon">
-                                <ResumeIcon />
-                            </div>
-                            <span>"Resume"</span>
-                        </FastA>
-                    </li>
-                </ul>
+            //         <li class="nav-item">
+            //             <FastA href="/resume" class="nav-link">
+            //                 <div class="nav-icon">
+            //                     <ResumeIcon />
+            //                 </div>
+            //                 <span>"Resume"</span>
+            //             </FastA>
+            //         </li>
+            //     </ul>
 
                 // Contact/Social Media Icons
                 <div class="nav-social">
@@ -112,38 +112,38 @@ pub fn Nav() -> impl IntoView {
                 )
             }>
                 <div class="mobile-menu-content">
-                    <ul class="mobile-nav-links">
-                        <li class="mobile-nav-item">
-                            <div on:click=close_mobile_menu>
-                                <FastA href="/blog" class="mobile-nav-link">
-                                    <div class="mobile-nav-icon">
-                                        <BlogIcon />
-                                    </div>
-                                    <span>"Blog"</span>
-                                </FastA>
-                            </div>
-                        </li>
-                        <li class="mobile-nav-item">
-                            <div on:click=close_mobile_menu>
-                                <FastA href="/projects" class="mobile-nav-link">
-                                    <div class="mobile-nav-icon">
-                                        <ProjectIcon />
-                                    </div>
-                                    <span>"Projects"</span>
-                                </FastA>
-                            </div>
-                        </li>
-                        <li class="mobile-nav-item">
-                            <div on:click=close_mobile_menu>
-                                <FastA href="/resume" class="mobile-nav-link">
-                                    <div class="mobile-nav-icon">
-                                        <ResumeIcon />
-                                    </div>
-                                    <span>"Resume"</span>
-                                </FastA>
-                            </div>
-                        </li>
-                    </ul>
+                    // <ul class="mobile-nav-links">
+                    //     <li class="mobile-nav-item">
+                    //         <div on:click=close_mobile_menu>
+                    //             <FastA href="/blog" class="mobile-nav-link">
+                    //                 <div class="mobile-nav-icon">
+                    //                     <BlogIcon />
+                    //                 </div>
+                    //                 <span>"Blog"</span>
+                    //             </FastA>
+                    //         </div>
+                    //     </li>
+                    //     <li class="mobile-nav-item">
+                    //         <div on:click=close_mobile_menu>
+                    //             <FastA href="/projects" class="mobile-nav-link">
+                    //                 <div class="mobile-nav-icon">
+                    //                     <ProjectIcon />
+                    //                 </div>
+                    //                 <span>"Projects"</span>
+                    //             </FastA>
+                    //         </div>
+                    //     </li>
+                    //     <li class="mobile-nav-item">
+                    //         <div on:click=close_mobile_menu>
+                    //             <FastA href="/resume" class="mobile-nav-link">
+                    //                 <div class="mobile-nav-icon">
+                    //                     <ResumeIcon />
+                    //                 </div>
+                    //                 <span>"Resume"</span>
+                    //             </FastA>
+                    //         </div>
+                    //     </li>
+                    // </ul>
 
                     // Social Media in Mobile Menu
                     <div class="mobile-nav-social">

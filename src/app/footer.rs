@@ -1,4 +1,4 @@
-use crate::app::subscribe_form::SubscribeForm;
+use super::subscribe_form::SubscribeForm;
 use leptos::prelude::*;
 
 #[component]

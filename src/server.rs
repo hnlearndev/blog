@@ -10,16 +10,23 @@ pub mod services;
 // Import necessary crates and modules
 use crate::server::{
     db::{config, pool, state::AppState},
-    middleware::global_layer::{cors::cors_layer, security_headers::security_headers},
+    middleware::global_layer::{cors_layer, security_headers},
     routes::subscriber::subscriber_routes,
 };
-use axum::{middleware::from_fn, Router};
+use axum::{
+    Router, 
+    middleware::from_fn,
+};
 use leptos::prelude::*;
 use leptos_axum::{LeptosRoutes, generate_route_list};
 use std::time::Duration;
-use tower_http::timeout::TimeoutLayer;
-use tower_http::compression::CompressionLayer;
+use tower_http::{
+    compression::CompressionLayer,
+    timeout::TimeoutLayer,
+    trace::TraceLayer,
+};
 use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberInitExt};
+
 
 /// Main server run function - called by main.rs
 #[cfg(feature = "ssr")]
@@ -52,8 +59,10 @@ pub async fn run() {
 
     // Build the Axum router with Leptos integration and subscriber API
     let app = Router::new()
+        // Apply middleware layers (outermost first)
         .layer(CompressionLayer::new())
-        .layer(TimeoutLayer::new(Duration::from_secs(10)))
+        .layer(TimeoutLayer::new(Duration::from_secs(30)))
+        .layer(TraceLayer::new_for_http())
         .layer(cors_layer())
         .layer(from_fn(security_headers))
         .leptos_routes(&leptos_options, routes, {

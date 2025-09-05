@@ -29,7 +29,7 @@ dotenvy = { version = "0.15", optional = true }
 lucide-leptos = { version = "2.32.0", features = ["all-icons"] }
 tower_governor = { version = "0.8.0", optional = true }
 tower = { version = "0.5.2", features = ["timeout"], optional = true }
-tower-http = { version = "0.6.6", features = ["cors", "compression-br", "timeout"], optional = true }
+tower-http = { version = "0.6.6", features = ["cors", "compression-br", "timeout", "trace", "set-header"], optional = true }
 tracing = { version = "0.1", optional = true }
 tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter", "json"] }
 axum-extra = { version = "0.10.1", features = ["cookie"], optional = true }
@@ -65,6 +65,11 @@ ssr = [
     "leptos_meta/ssr",
     "leptos_router/ssr",
 ]
+
+[build-dependencies]
+pulldown-cmark = { version = "0.13", default-features = false, features = ["html"] }
+syntect = "5"
+chrono = { version = "0.4", features = ["serde"] }
 
 # Defines a size-optimized profile for the WASM bundle in release mode
 [profile.wasm-release]

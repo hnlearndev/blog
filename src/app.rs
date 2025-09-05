@@ -1,18 +1,22 @@
 // Import sub-modules
 mod footer;
 mod helpers;
-mod home;
+mod homepage;
 mod icons;
 mod nav;
-pub mod subscribe_form;
+mod postpage;
+mod subscribe_form;
 
 // Import necessary crates and modules
+use homepage::HomePage;
 use leptos::prelude::*;
 use leptos_meta::{MetaTags, Stylesheet, Title, provide_meta_context};
 use leptos_router::{
     StaticSegment,
     components::{Route, Router, Routes},
+    path,
 };
+use postpage::PostPage;
 
 // Function to create the HTML shell for the application
 pub fn shell(options: LeptosOptions) -> impl IntoView {
@@ -56,7 +60,8 @@ pub fn App() -> impl IntoView {
             // Main content area with routing
             <main class="container">
                 <Routes fallback=|| "Page not found.".into_view()>
-                    <Route path=StaticSegment("") view=home::HomePage />
+                    <Route path=StaticSegment("") view=HomePage />
+                    <Route path=path!("/posts/:id") view=PostPage />
                 </Routes>
             </main>
 
