@@ -6,6 +6,7 @@ mod icons;
 mod nav;
 mod postpage;
 mod subscribe_form;
+mod theme_toggle;
 
 // Import necessary crates and modules
 use homepage::HomePage;

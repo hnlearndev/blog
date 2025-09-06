@@ -1,0 +1,36 @@
+# fly.toml app configuration file generated for blog-wtb-9980 on 2025-09-05T21:14:46-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'blog-wtb-9980'
+primary_region = 'sin'
+
+[build]
+  dockerfile = 'Containerfile'
+
+[env]
+  LEPTOS_ENV = 'PROD'
+  LEPTOS_SITE_ROOT = '/app/site'
+  LEPTOS_SITE_PKG_DIR = 'pkg'
+  LEPTOS_SITE_ADDR = '0.0.0.0:3000'
+  RUST_LOG = 'info'
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+  # Health check
+  [[http_service.checks]]
+    grace_period = '10s'
+    interval = '30s'
+    method = 'GET'
+    timeout = '5s'
+    path = '/'
+
+[[vm]]
+  size = 'shared-cpu-1x'

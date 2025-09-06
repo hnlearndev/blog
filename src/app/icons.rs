@@ -1,5 +1,5 @@
 use leptos::prelude::*;
-use lucide_leptos::{Boxes, File, Github, House, Linkedin, Mail, Menu, NotebookPen, X};
+use lucide_leptos::{Boxes, File, Github, House, Linkedin, Mail, Menu, Moon, NotebookPen, Sun, X};
 
 /// Home icon
 #[component]
@@ -70,5 +70,21 @@ pub fn ProjectIcon() -> impl IntoView {
 pub fn ResumeIcon() -> impl IntoView {
     view! {
         <File size=27 />
+    }
+}
+
+/// Sun icon for light theme
+#[component]
+pub fn SunIcon() -> impl IntoView {
+    view! {
+        <Sun size=20 />
+    }
+}
+
+/// Moon icon for dark theme
+#[component]
+pub fn MoonIcon() -> impl IntoView {
+    view! {
+        <Moon size=20 />
     }
 }

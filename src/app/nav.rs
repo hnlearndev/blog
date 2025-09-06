@@ -1,10 +1,13 @@
 use super::helpers::FastA;
 use super::icons::*;
+use super::theme_toggle::ThemeToggle;
 use leptos::{ev::MouseEvent, prelude::*};
+use std::collections::HashMap;
 
 #[component]
 pub fn Nav() -> impl IntoView {
     let (mobile_menu_open, set_mobile_menu_open) = signal(false);
+    let (clicked_links, set_clicked_links) = signal(HashMap::<String, String>::new());
 
     let toggle_mobile_menu = move |_: MouseEvent| {
         set_mobile_menu_open.update(|open| *open = !*open);
@@ -12,6 +15,37 @@ pub fn Nav() -> impl IntoView {
 
     let _close_mobile_menu = move |_: MouseEvent| {
         set_mobile_menu_open.set(false);
+    };
+
+    let handle_link_click = move |link_id: String| {
+        move |_: MouseEvent| {
+            // Add clicked class immediately
+            set_clicked_links.update(|links| {
+                links.insert(link_id.clone(), "clicked".to_string());
+            });
+            
+            // Start reset animation after 500ms
+            let link_id_clone1 = link_id.clone();
+            set_timeout(
+                move || {
+                    set_clicked_links.update(|links| {
+                        links.insert(link_id_clone1, "reset-animation".to_string());
+                    });
+                },
+                std::time::Duration::from_millis(500),
+            );
+            
+            // Complete reset after animation finishes
+            let link_id_clone2 = link_id.clone();
+            set_timeout(
+                move || {
+                    set_clicked_links.update(|links| {
+                        links.remove(&link_id_clone2);
+                    });
+                },
+                std::time::Duration::from_millis(800),
+            );
+        }
     };
 
     view! {
@@ -61,13 +95,22 @@ pub fn Nav() -> impl IntoView {
             //         </li>
             //     </ul>
 
+                // Theme Toggle
+                <div class="nav-theme">
+                    <ThemeToggle />
+                </div>
+
                 // Contact/Social Media Icons
                 <div class="nav-social">
                     <a
                         href="https://github.com/hnlearndev"
                         target="_blank"
-                        class="social-link"
+                        class=move || {
+                            let click_state = clicked_links.get().get("github").cloned().unwrap_or_default();
+                            format!("social-link {}", click_state)
+                        }
                         title="GitHub"
+                        on:click=handle_link_click("github".to_string())
                     >
                         <div class="social-icon">
                             <GitHubIcon />
@@ -77,15 +120,27 @@ pub fn Nav() -> impl IntoView {
                     <a
                         href="https://www.linkedin.com/in/hieunthello/"
                         target="_blank"
-                        class="social-link"
+                        class=move || {
+                            let click_state = clicked_links.get().get("linkedin").cloned().unwrap_or_default();
+                            format!("social-link {}", click_state)
+                        }
                         title="LinkedIn"
+                        on:click=handle_link_click("linkedin".to_string())
                     >
                         <div class="social-icon">
                             <LinkedInIcon />
                         </div>
                     </a>
 
-                    <a href="mailto:hieunt.hello@gmail.com" class="social-link" title="Email">
+                    <a 
+                        href="mailto:hieunt.hello@gmail.com" 
+                        class=move || {
+                            let click_state = clicked_links.get().get("email").cloned().unwrap_or_default();
+                            format!("social-link {}", click_state)
+                        }
+                        title="Email"
+                        on:click=handle_link_click("email".to_string())
+                    >
                         <div class="social-icon">
                             <ContactIcon />
                         </div>
@@ -145,12 +200,21 @@ pub fn Nav() -> impl IntoView {
                     //     </li>
                     // </ul>
 
+                    // Theme Toggle in Mobile Menu
+                    <div class="mobile-nav-theme">
+                        <ThemeToggle />
+                    </div>
+
                     // Social Media in Mobile Menu
                     <div class="mobile-nav-social">
                         <a
                             href="https://github.com/hnlearndev"
                             target="_blank"
-                            class="mobile-social-link"
+                            class=move || {
+                                let click_state = clicked_links.get().get("mobile-github").cloned().unwrap_or_default();
+                                format!("mobile-social-link {}", click_state)
+                            }
+                            on:click=handle_link_click("mobile-github".to_string())
                         >
                             <div class="mobile-social-icon">
                                 <GitHubIcon />
@@ -160,14 +224,25 @@ pub fn Nav() -> impl IntoView {
                         <a
                             href="https://www.linkedin.com/in/hieunthello/"
                             target="_blank"
-                            class="mobile-social-link"
+                            class=move || {
+                                let click_state = clicked_links.get().get("mobile-linkedin").cloned().unwrap_or_default();
+                                format!("mobile-social-link {}", click_state)
+                            }
+                            on:click=handle_link_click("mobile-linkedin".to_string())
                         >
                             <div class="mobile-social-icon">
                                 <LinkedInIcon />
                             </div>
                             <span>"LinkedIn"</span>
                         </a>
-                        <a href="mailto:hieunt.hello@gmail.com" class="mobile-social-link">
+                        <a 
+                            href="mailto:hieunt.hello@gmail.com" 
+                            class=move || {
+                                let click_state = clicked_links.get().get("mobile-email").cloned().unwrap_or_default();
+                                format!("mobile-social-link {}", click_state)
+                            }
+                            on:click=handle_link_click("mobile-email".to_string())
+                        >
                             <div class="mobile-social-icon">
                                 <ContactIcon />
                             </div>
