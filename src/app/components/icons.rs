@@ -1,5 +1,7 @@
 use leptos::prelude::*;
-use lucide_leptos::{Boxes, File, Github, House, Linkedin, Mail, Menu, Moon, NotebookPen, Sun, X};
+use lucide_leptos::{
+    Boxes, File, FileHeart, Github, House, Linkedin, Mail, Menu, Moon, NotebookPen, Sun, X,
+};
 
 /// Home icon
 #[component]
@@ -14,6 +16,14 @@ pub fn HomeIcon() -> impl IntoView {
 pub fn BlogIcon() -> impl IntoView {
     view! {
         <NotebookPen size=27 />
+    }
+}
+
+/// Poem icon
+#[component]
+pub fn PoemIcon() -> impl IntoView {
+    view! {
+        <FileHeart size=27 />
     }
 }
 

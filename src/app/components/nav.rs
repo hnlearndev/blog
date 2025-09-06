@@ -1,6 +1,4 @@
-use super::helpers::FastA;
-use super::icons::*;
-use super::theme_toggle::ThemeToggle;
+use super::{fast_a::FastA, icons::*, theme_toggle::ThemeToggle};
 use leptos::{ev::MouseEvent, prelude::*};
 use std::collections::HashMap;
 
@@ -13,7 +11,7 @@ pub fn Nav() -> impl IntoView {
         set_mobile_menu_open.update(|open| *open = !*open);
     };
 
-    let _close_mobile_menu = move |_: MouseEvent| {
+    let close_mobile_menu = move |_: MouseEvent| {
         set_mobile_menu_open.set(false);
     };
 
@@ -23,7 +21,7 @@ pub fn Nav() -> impl IntoView {
             set_clicked_links.update(|links| {
                 links.insert(link_id.clone(), "clicked".to_string());
             });
-            
+
             // Start reset animation after 500ms
             let link_id_clone1 = link_id.clone();
             set_timeout(
@@ -34,7 +32,7 @@ pub fn Nav() -> impl IntoView {
                 },
                 std::time::Duration::from_millis(500),
             );
-            
+
             // Complete reset after animation finishes
             let link_id_clone2 = link_id.clone();
             set_timeout(
@@ -66,24 +64,24 @@ pub fn Nav() -> impl IntoView {
 
             // Right side - Desktop Navigation
             <div class="nav-desktop">
-            //     <ul class="nav-links">
-            //         <li class="nav-item">
-            //             <FastA href="/blog" class="nav-link">
-            //                 <div class="nav-icon">
-            //                     <BlogIcon />
-            //                 </div>
-            //                 <span>"Blog"</span>
-            //             </FastA>
-            //         </li>
+                <ul class="nav-links">
+                    <li class="nav-item">
+                        <FastA href="/posts" class="nav-link">
+                            <div class="nav-icon">
+                                <BlogIcon />
+                            </div>
+                            <span>"Blog"</span>
+                        </FastA>
+                    </li>
 
-            //         <li class="nav-item">
-            //             <FastA href="/projects" class="nav-link">
-            //                 <div class="nav-icon">
-            //                     <ProjectIcon />
-            //                 </div>
-            //                 <span>"Projects"</span>
-            //             </FastA>
-            //         </li>
+                    <li class="nav-item">
+                        <FastA href="/poems" class="nav-link">
+                            <div class="nav-icon">
+                                <PoemIcon />
+                            </div>
+                            <span>"Poems"</span>
+                        </FastA>
+                    </li>
 
             //         <li class="nav-item">
             //             <FastA href="/resume" class="nav-link">
@@ -93,7 +91,7 @@ pub fn Nav() -> impl IntoView {
             //                 <span>"Resume"</span>
             //             </FastA>
             //         </li>
-            //     </ul>
+                </ul>
 
                 // Theme Toggle
                 <div class="nav-theme">
@@ -132,8 +130,8 @@ pub fn Nav() -> impl IntoView {
                         </div>
                     </a>
 
-                    <a 
-                        href="mailto:hieunt.hello@gmail.com" 
+                    <a
+                        href="mailto:hieunt.hello@gmail.com"
                         class=move || {
                             let click_state = clicked_links.get().get("email").cloned().unwrap_or_default();
                             format!("social-link {}", click_state)
@@ -167,27 +165,29 @@ pub fn Nav() -> impl IntoView {
                 )
             }>
                 <div class="mobile-menu-content">
-                    // <ul class="mobile-nav-links">
-                    //     <li class="mobile-nav-item">
-                    //         <div on:click=close_mobile_menu>
-                    //             <FastA href="/blog" class="mobile-nav-link">
-                    //                 <div class="mobile-nav-icon">
-                    //                     <BlogIcon />
-                    //                 </div>
-                    //                 <span>"Blog"</span>
-                    //             </FastA>
-                    //         </div>
-                    //     </li>
-                    //     <li class="mobile-nav-item">
-                    //         <div on:click=close_mobile_menu>
-                    //             <FastA href="/projects" class="mobile-nav-link">
-                    //                 <div class="mobile-nav-icon">
-                    //                     <ProjectIcon />
-                    //                 </div>
-                    //                 <span>"Projects"</span>
-                    //             </FastA>
-                    //         </div>
-                    //     </li>
+                    <ul class="mobile-nav-links">
+                        <li class="mobile-nav-item">
+                            <div on:click=close_mobile_menu>
+                                <FastA href="/blog" class="mobile-nav-link">
+                                    <div class="mobile-nav-icon">
+                                        <BlogIcon />
+                                    </div>
+                                    <span>"Blog"</span>
+                                </FastA>
+                            </div>
+                        </li>
+
+                        <li class="mobile-nav-item">
+                            <div on:click=close_mobile_menu>
+                                <FastA href="/poems" class="mobile-nav-link">
+                                    <div class="mobile-nav-icon">
+                                        <PoemIcon />
+                                    </div>
+                                    <span>"Poems"</span>
+                                </FastA>
+                            </div>
+                        </li>
+
                     //     <li class="mobile-nav-item">
                     //         <div on:click=close_mobile_menu>
                     //             <FastA href="/resume" class="mobile-nav-link">
@@ -198,7 +198,7 @@ pub fn Nav() -> impl IntoView {
                     //             </FastA>
                     //         </div>
                     //     </li>
-                    // </ul>
+                    </ul>
 
                     // Theme Toggle in Mobile Menu
                     <div class="mobile-nav-theme">
@@ -235,8 +235,8 @@ pub fn Nav() -> impl IntoView {
                             </div>
                             <span>"LinkedIn"</span>
                         </a>
-                        <a 
-                            href="mailto:hieunt.hello@gmail.com" 
+                        <a
+                            href="mailto:hieunt.hello@gmail.com"
                             class=move || {
                                 let click_state = clicked_links.get().get("mobile-email").cloned().unwrap_or_default();
                                 format!("mobile-social-link {}", click_state)

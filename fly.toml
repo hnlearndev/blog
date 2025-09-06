@@ -1,14 +1,14 @@
-# fly.toml app configuration file generated for blog-wtb-9980 on 2025-09-05T21:14:46-04:00
-#
+# fly.toml app configuration file for Leptos blog application
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
 
 app = 'blog-wtb-9980'
 primary_region = 'sin'
 
+# Build configuration
 [build]
   dockerfile = 'Containerfile'
 
+# Runtime environment variables
 [env]
   LEPTOS_ENV = 'PROD'
   LEPTOS_SITE_ROOT = '/app/site'
@@ -16,21 +16,49 @@ primary_region = 'sin'
   LEPTOS_SITE_ADDR = '0.0.0.0:3000'
   RUST_LOG = 'info'
 
+# HTTP service configuration
 [http_service]
   internal_port = 3000
   force_https = true
-  auto_stop_machines = 'stop'
+  auto_stop_machines = 'suspend'
   auto_start_machines = true
-  min_machines_running = 0
+  min_machines_running = 1
   processes = ['app']
 
-  # Health check
+  # Health checks for monitoring application availability
   [[http_service.checks]]
     grace_period = '10s'
     interval = '30s'
     method = 'GET'
-    timeout = '5s'
+    timeout = '10s'
     path = '/'
+    headers = { "User-Agent" = "fly-health-check" }
 
+
+# Machine/VM configuration
 [[vm]]
   size = 'shared-cpu-1x'
+  memory = '256mb'
+
+# Deploy configuration
+[deploy]
+  strategy = 'rolling'
+  max_unavailable = 0.5
+
+# Restart policy
+[processes]
+  app = './blog'
+
+# Optional: Auto-scaling configuration
+# Uncomment and adjust as needed for your traffic patterns
+# [metrics]
+#   port = 9091
+#   path = "/metrics"
+#
+# [[services.ports]]
+#   handlers = ["http"]
+#   port = "80"
+#
+# [[services.ports]]
+#   handlers = ["tls", "http"]
+#   port = "443"

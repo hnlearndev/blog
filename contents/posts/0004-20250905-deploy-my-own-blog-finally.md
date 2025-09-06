@@ -1,8 +1,8 @@
-# Deploy my own tech blog finally
+# Deploy my own blog finally
 
 ## Love at first sight
 
-I came across [khuedoan.com](khuedoan.com) while scheming through Leptos documentation. His simple yet efficient, thus elegant solution is what I have been looking for:
+I came across [khuedoan.com](https://www.khuedoan.com/) while scheming through Leptos documentation. His simple yet efficient, thus elegant solution is what I have been looking for:
 
 - Converting markdown to HTML helps to focus on content rather than juggling with syntax.
 - Simple architecture fits right to the needs of a personal blog.
@@ -39,7 +39,7 @@ To be honest, I am not a trained SWE. I do not earn my bread and butter from the
 
 Here and there, looking at my project, you will find elements inspired by Khue's solution. However, beyond the front-end impression, a deeper look into my project's structure (like yin-yang to his) would undoubtedly intimidate beginners taking their first steps into the realm of full-stack development. Soldiers, when you progress to see how LEGO pieces are placed and know how to connect the dots, you will start thanking Martin for his way of "complexity". Yeah, I blame him for that.
 
-Some might say this is probably overkill for a personal blog. I agree. I over-engineered it on purpose. From my point of view, this is not different to a newbie gain from a first-time-to-the-gym with world class trainer. He does not just walk in to see how each machines works. He immediately benches, squats, deadlifts with the best guidance possible.
+From my point of view, my over-engineered project is no different from a newbie's gains on their first day at the gym with a world-class trainer.
 
 Recently, I had a small conversation with an old friend. He chooses to live simply and avoids anything that would complicate his life. I nodded and told myself I should follow his advice. Yet, over this learning journey, I have gained more than just the knowledge I have been seeking. I came to appreciate complexity - the "right" complexity. Gems, you need to hike the extra mile across the hills to see what I really mean.
 

@@ -1,77 +1,99 @@
-# Multi-stage build for Leptos blog application
-# Stage 1: Builder
+# Production Containerfile optimized for Fly.io deployment with managed PostgreSQL
+# Build stage
 FROM rustlang/rust:nightly-bookworm as builder
 
-# Install system dependencies
+# Install system dependencies and cargo-binstall for faster tool installation
 RUN apt-get update && apt-get install -y \
     pkg-config \
     libssl-dev \
     ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+    curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 
-# Install cargo-leptos
-RUN cargo install cargo-leptos
+# Install cargo-leptos, sqlx-cli, compatible wasm-bindgen-cli, and WebAssembly target
+RUN cargo binstall cargo-leptos sqlx-cli --no-confirm --log-level warn \
+    && cargo install wasm-bindgen-cli --version 0.2.100 \
+    && rustup target add wasm32-unknown-unknown
 
 # Set working directory
 WORKDIR /app
 
-# Copy dependency files first for better caching
+# Copy dependency files first for better Docker layer caching
 COPY Cargo.toml Cargo.lock ./
 
-# Create a dummy main.rs to compile dependencies
-RUN mkdir src && echo "fn main() {}" > src/main.rs
-RUN echo '[lib]\nname = "blog"\npath = "src/lib.rs"' >> Cargo.toml.temp && \
-    echo 'fn main() {}' > src/lib.rs && \
-    mv Cargo.toml.temp Cargo.toml || true
+# Create dummy source files to build dependencies
+RUN mkdir -p src \
+    && echo 'fn main() {}' > src/main.rs \
+    && echo 'pub fn lib() {}' > src/lib.rs
 
-# Build dependencies (this layer will be cached if Cargo.toml doesn't change)
+# Build dependencies only (this layer will be cached if Cargo.toml doesn't change)
 RUN cargo build --release --features ssr
+
+# Remove dummy source files
 RUN rm -rf src
 
-# Copy all source code
-COPY . .
+# Copy source code and assets
+COPY src/ ./src/
+COPY public/ ./public/
+COPY contents/ ./contents/
+COPY migrations/ ./migrations/
+COPY .sqlx/ ./.sqlx/
 
-# Build the application with cargo-leptos
+# Copy build script if it exists
+COPY build.rs ./
+
+# Set SQLx to offline mode and build the Leptos application
+ENV SQLX_OFFLINE=true
 RUN cargo leptos build --release
 
-# Stage 2: Runtime
+# Runtime stage - minimal image for production
 FROM debian:bookworm-slim as runtime
 
-# Install runtime dependencies
+# Install runtime dependencies including curl for healthchecks
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     libssl3 \
-    && rm -rf /var/lib/apt/lists/*
-
-# Create app user
-RUN groupadd -r app && useradd -r -g app app
+    curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd -r app \
+    && useradd -r -g app app
 
 # Set working directory
 WORKDIR /app
 
-# Copy the compiled binary
+# Copy the compiled binary and assets from builder stage
 COPY --from=builder /app/target/release/blog ./blog
-
-# Copy the site directory (contains WASM, CSS, and other assets)
 COPY --from=builder /app/target/site ./site
-
-# Copy public assets
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/migrations ./migrations
 
-# Change ownership to app user
+# Copy sqlx-cli for running migrations
+COPY --from=builder /usr/local/cargo/bin/sqlx ./sqlx
+
+# Create startup script for running migrations and starting the app
+RUN echo '#!/bin/bash\n\
+set -e\n\
+echo "Running database migrations..."\n\
+./sqlx migrate run --database-url "$DATABASE_URL"\n\
+echo "Starting application..."\n\
+exec "$@"' > /app/start.sh \
+    && chmod +x /app/start.sh
+
+# Set ownership and switch to non-root user for security
 RUN chown -R app:app /app
-
-# Switch to app user
 USER app
 
-# Expose port
+# Expose the port
 EXPOSE 3000
 
-# Set environment variables (these will be overridden by fly.toml)
+# Set production environment variables
 ENV LEPTOS_ENV=PROD
 ENV LEPTOS_SITE_ROOT=/app/site
 ENV LEPTOS_SITE_PKG_DIR=pkg
 ENV LEPTOS_SITE_ADDR=0.0.0.0:3000
+ENV RUST_LOG=info
 
-# Run the application
+# Use startup script as entrypoint to run migrations before starting the app
+ENTRYPOINT ["/app/start.sh"]
 CMD ["./blog"]

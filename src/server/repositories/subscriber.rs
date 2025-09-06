@@ -1,5 +1,4 @@
 use crate::server::models::subscriber::Subscriber;
-use chrono::Utc;
 use sqlx::PgPool;
 use uuid::{Uuid, uuid};
 
@@ -16,13 +15,13 @@ impl Subscriber {
         sqlx::query_as!(
             Subscriber,
             r#"
-            INSERT INTO newsletter_subscribers (id, email, subscribed_at, ip_address, location, user_agent)
+            INSERT INTO wnblog.subscribers (id, email, subscribed_at, ip_address, location, user_agent)
             VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING *
             "#,
             Uuid::new_v5(&DNS_NAMESPACE, email.as_bytes()),
             email,
-            Utc::now(),
+            chrono::Utc::now(),
             ip_address,
             location,
             user_agent

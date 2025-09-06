@@ -1,19 +1,17 @@
-include!(concat!(env!("OUT_DIR"), "/posts_data.rs"));
+use leptos::prelude::*;
+use leptos_meta::Title;
+use leptos_router::params::ParamsMap;
 
-use leptos::{ev::MouseEvent, prelude::*};
-use leptos_router::{components::ToHref, hooks::use_navigate};
-
-#[derive(Debug)]
-pub struct PostMetadata {
+#[derive(Debug, Clone)]
+pub struct ContentMetadata {
     pub id: String,
     pub date: String,
     pub title: String,
 }
 
-pub fn get_post_metadata_list() -> Vec<PostMetadata> {
-    POSTS
-        .iter()
-        .map(|&(id, date, title, _content)| PostMetadata {
+pub fn get_content_metadata_list(data: &[(&str, &str, &str, &str)]) -> Vec<ContentMetadata> {
+    data.iter()
+        .map(|&(id, date, title, _content)| ContentMetadata {
             id: id.to_string(),
             date: date.to_string(),
             title: title.to_string(),
@@ -21,13 +19,15 @@ pub fn get_post_metadata_list() -> Vec<PostMetadata> {
         .collect()
 }
 
-pub fn get_post(path: String) -> Option<(PostMetadata, String)> {
-    POSTS
-        .iter()
+pub fn get_content(
+    data: &[(&str, &str, &str, &str)],
+    path: &str,
+) -> Option<(ContentMetadata, String)> {
+    data.iter()
         .filter_map(|(id, date, title, content)| {
-            if id == &path {
+            if *id == path {
                 Some((
-                    PostMetadata {
+                    ContentMetadata {
                         id: id.to_string(),
                         date: date.to_string(),
                         title: title.to_string(),
@@ -41,40 +41,30 @@ pub fn get_post(path: String) -> Option<(PostMetadata, String)> {
         .next()
 }
 
-#[component]
-pub fn FastA<H>(
-    href: H,
-    #[prop(optional)] target: Option<&'static str>,
-    #[prop(optional, into)] class: Option<String>,
-    children: Children,
-) -> impl IntoView
-where
-    H: ToHref + Send + Sync + 'static,
-{
-    let navigate = use_navigate();
-    let path = href.to_href()();
-
-    fn is_left_click(event: &MouseEvent) -> bool {
-        event.button() == 0
-            && !event.meta_key()
-            && !event.ctrl_key()
-            && !event.shift_key()
-            && !event.alt_key()
+// NOTE: This component is rendered via a Leptos router route, not an HTTP API route.
+// All post data is accessed locally, NOT  fetched from a backend API.
+// If you add an Axum backend in the future, you can switch to fetching data via HTTP.
+pub fn render_content_page(data: &[(&str, &str, &str, &str)], params: &Memo<ParamsMap>) -> AnyView {
+    let id = params.with(|p| p.get("id").unwrap_or_default());
+    match get_content(data, &id) {
+        Some((meta, content)) => view! {
+            <Title text=meta.title.clone() />
+            <ContentPage metadata=meta content=content />
+        }
+        .into_any(),
+        None => view! { <p>"Not found."</p> }.into_any(),
     }
+}
 
+#[component]
+fn ContentPage(metadata: ContentMetadata, content: String) -> impl IntoView {
     view! {
-        <a
-            href=path.clone()
-            target=target
-            class=class.map(Oco::from)
-            on:mousedown=move |event| {
-                if is_left_click(&event) {
-                    event.prevent_default();
-                    navigate(&path, Default::default());
-                }
-            }
-        >
-            {children()}
-        </a>
+        <article>
+            <small>"Date: " {metadata.date.clone()}</small>
+            <br />
+            <br />
+            <br />
+            <div inner_html=content></div>
+        </article>
     }
 }

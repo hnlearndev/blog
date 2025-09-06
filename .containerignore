@@ -1,0 +1,77 @@
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# Build artifacts and caches
+target/
+node_modules/
+dist/
+build/
+.cache/
+*.wasm
+*.wasm.map
+
+# Environment and secrets
+.env*
+!.env.example
+*.pem
+*.key
+*.crt
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+*~
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.pid
+*.seed
+*.coverage
+.nyc_output
+tmp/
+temp/
+
+# Documentation and development files
+README.md
+CHANGELOG.md
+*.md
+docs/
+examples/
+benchmarks/
+tests/
+
+# Fly.io specific (these are not needed in the container)
+fly.toml
+.fly/
+
+# Container files
+Dockerfile*
+Containerfile*
+.dockerignore
+.containerignore
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# OS generated files
+.DS_Store?
+ehthumbs.db
+Icon?
+
+# End-to-end test artifacts
+end2end/
+e2e/
+cypress/
+playwright/
+
+# Rust specific
+Cargo.lock.backup

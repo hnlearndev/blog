@@ -17,16 +17,22 @@ fn main() {
 
     // Generate output file path
     let out_dir = env::var("OUT_DIR").unwrap();
-    let dest_path = Path::new(&out_dir).join("posts_data.rs");
 
-    // Obtain entries for all posts from contents folder
-    let posts = posts_list_from_md_files(Path::new("./contents/posts"));
+    // Generate output file path for posts data
+    let post_dest_path = Path::new(&out_dir).join("posts_data.rs");
+    let posts = list_from_md_files(Path::new("./contents/posts"));
+    write_out_list("POSTS", posts, &post_dest_path);
 
-    // Write out the Rust source file with the posts data
-    write_out_list(posts, &dest_path);
+    // Generate output file path for poems data
+    let poem_dest_path = Path::new(&out_dir).join("poems_data.rs");
+    let poems = list_from_md_files(Path::new("./contents/poems"));
+    write_out_list("POEMS", poems, &poem_dest_path);
 }
 
-fn write_out_list(posts: Vec<(u32, NaiveDate, String, String)>, dest_path: &Path) {
+// ===========================
+// BUILD HELPERS
+// ===========================
+fn write_out_list(varname: &str, posts: Vec<(u32, NaiveDate, String, String)>, dest_path: &Path) {
     let entries: Vec<String> = posts
         .iter()
         .map(|(id, date, title, html)| {
@@ -43,7 +49,7 @@ fn write_out_list(posts: Vec<(u32, NaiveDate, String, String)>, dest_path: &Path
     fs::write(
         dest_path,
         format!(
-            "static POSTS: &[(&str, &str, &str, &str)] = &[\n{}\n];",
+            "static {varname}: &[(&str, &str, &str, &str)] = &[\n{}\n];",
             entries.join("\n")
         ),
     )
@@ -52,7 +58,7 @@ fn write_out_list(posts: Vec<(u32, NaiveDate, String, String)>, dest_path: &Path
 
 // Read markdown files from the specified directory and return a list of posts
 // Purposely control types u32 and NaiveDate
-fn posts_list_from_md_files(path: &Path) -> Vec<(u32, NaiveDate, String, String)> {
+fn list_from_md_files(path: &Path) -> Vec<(u32, NaiveDate, String, String)> {
     // Read all markdown files in the directory
     let mut posts: Vec<_> = fs::read_dir(path)
         .unwrap()

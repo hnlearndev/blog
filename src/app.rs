@@ -1,15 +1,10 @@
 // Import sub-modules
-mod footer;
-mod helpers;
-mod homepage;
-mod icons;
-mod nav;
-mod postpage;
-mod subscribe_form;
-mod theme_toggle;
+pub mod components;
+pub mod helpers;
+pub mod pages;
 
 // Import necessary crates and modules
-use homepage::HomePage;
+use components::{Footer, Nav};
 use leptos::prelude::*;
 use leptos_meta::{MetaTags, Stylesheet, Title, provide_meta_context};
 use leptos_router::{
@@ -17,7 +12,7 @@ use leptos_router::{
     components::{Route, Router, Routes},
     path,
 };
-use postpage::PostPage;
+use pages::*;
 
 // Function to create the HTML shell for the application
 pub fn shell(options: LeptosOptions) -> impl IntoView {
@@ -50,25 +45,30 @@ pub fn App() -> impl IntoView {
         <Stylesheet id="nav-styles" href="/nav-styles.css" />
         <Stylesheet id="footer-styles" href="/footer-styles.css" />
 
-        <Title text="Welcome to Willian's tech blog" />
+        <Title text="Welcome to Willian's blog" />
 
         <Router>
             // Navigation bar
             <header class="container">
-                <nav::Nav />
+                <Nav />
             </header>
 
             // Main content area with routing
             <main class="container">
                 <Routes fallback=|| "Page not found.".into_view()>
                     <Route path=StaticSegment("") view=HomePage />
-                    <Route path=path!("/posts/:id") view=PostPage />
+                    // Posts section
+                    <Route path=StaticSegment("/posts") view=PostListPage />
+                    <Route path=path!("/posts/:id") view=SinglePostPage />
+                    // Poems section
+                    <Route path=StaticSegment("/poems") view=PoemListPage />
+                    <Route path=path!("/poems/:id") view=SinglePoemPage />
                 </Routes>
             </main>
 
             // Footer section
             <footer class="container">
-                <footer::Footer />
+                <Footer />
             </footer>
         </Router>
     }
