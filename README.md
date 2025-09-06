@@ -1,5 +1,7 @@
 # Willian's Personal Blog
 
+The blog is at [wiiliannguyen.com](https://www.williannguyen.com)
+
 ## Architecture Overview
 
 This application follows a **full-stack Rust architecture** using:
@@ -224,7 +226,7 @@ This should be a good practise, however, from my point of view, refactor this ou
 - [FullStack Rust with Axum from Martin Fabio](https://www.amazon.com/FullStack-Rust-Axum-Server-Rendered-High-Performance-ebook/dp/B0FM6XF8YX).
 - [Leptos resources](https://leptos.dev/)
 - [awesome-leptos repo](https://github.com/leptos-rs/awesome-leptos)
-- The wild internet and various other sources.
+- The wild internet, AIs and various other sources...
 
 ## Reflection
 

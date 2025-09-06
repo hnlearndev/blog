@@ -82,8 +82,8 @@ fn list_from_md_files(path: &Path) -> Vec<(u32, NaiveDate, String, String)> {
         })
         .collect();
 
-    // Sort posts by id to ensure consistent order
-    posts.sort_by_key(|(id, _, _, _)| *id);
+    // Sort posts by id - descending/newest first
+    posts.sort_by_key(|(id, _, _, _)| std::cmp::Reverse(*id));
 
     posts
 }

@@ -8,25 +8,18 @@ pub mod routes;
 pub mod services;
 
 // Import necessary crates and modules
+use crate::app::shell;
 use crate::server::{
     db::{config, pool, state::AppState},
     middleware::global_layer::{cors_layer, security_headers},
     routes::subscriber::subscriber_routes,
 };
-use axum::{
-    Router, 
-    middleware::from_fn,
-};
+use axum::{Router, middleware::from_fn};
 use leptos::prelude::*;
 use leptos_axum::{LeptosRoutes, generate_route_list};
 use std::time::Duration;
-use tower_http::{
-    compression::CompressionLayer,
-    timeout::TimeoutLayer,
-    trace::TraceLayer,
-};
+use tower_http::{compression::CompressionLayer, timeout::TimeoutLayer, trace::TraceLayer};
 use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberInitExt};
-
 
 /// Main server run function - called by main.rs
 #[cfg(feature = "ssr")]
@@ -67,9 +60,9 @@ pub async fn run() {
         .layer(from_fn(security_headers))
         .leptos_routes(&leptos_options, routes, {
             let leptos_options = leptos_options.clone();
-            move || crate::app::shell(leptos_options.clone())
+            move || shell(leptos_options.clone())
         })
-        .fallback(leptos_axum::file_and_error_handler(crate::app::shell))
+        .fallback(leptos_axum::file_and_error_handler(shell))
         .with_state(leptos_options.clone())
         .merge(subscriber_routes().with_state(app_state));
 

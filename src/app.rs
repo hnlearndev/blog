@@ -15,6 +15,7 @@ use leptos_router::{
 use pages::*;
 
 // Function to create the HTML shell for the application
+// Used as the entry point for rendering the HTML shell during server-side rendering (SSR) or hydration.
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
         <!DOCTYPE html>
@@ -24,6 +25,7 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="description" content="Willian's personal website" />
                 <meta name="color-scheme" content="light dark" />
+                <link rel="icon" href="/favico.svg" />
                 <AutoReload options=options.clone() />
                 <HydrationScripts options />
                 <MetaTags />

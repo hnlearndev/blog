@@ -1,13 +1,11 @@
 # Độ ta không độ nàng?
 
-https://youtu.be/Om75ZrBSTco
-
 <div align="center">
 Cà sa đã khoác lên người
 
 Một lòng hướng phật vẹn mười pháp tâm
 
-Từ bi hỷ xả (đức)Thế Âm
+Từ bi hỷ xả (đức) Thế Âm
 
 Phóng sanh lại hoá ái nhân kiếp này
 
@@ -24,4 +22,4 @@ Lấy mất nàng, để lại ta
 Người đi hay ở mới là đau hơn?
 </div>
 
-
+*PS: Cảm hứng đến từ [MV]( https://www.youtube.com/watch?v=Om75ZrBSTco) này.*

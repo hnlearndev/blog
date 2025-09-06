@@ -4,10 +4,11 @@ use leptos::{ev::MouseEvent, prelude::*};
 #[cfg(feature = "hydrate")]
 use wasm_bindgen::JsCast;
 #[cfg(feature = "hydrate")]
-use web_sys::{Document, HtmlElement, window, js_sys};
+use web_sys::{Document, HtmlElement, js_sys, window};
 
 #[component]
 pub fn ThemeToggle() -> impl IntoView {
+    // false = light mode, true = dark mode
     let (is_dark, set_is_dark) = signal(false);
 
     // Initialize theme based on system preference or stored preference
@@ -51,9 +52,10 @@ pub fn ThemeToggle() -> impl IntoView {
                         let _ = storage.set_item("theme", theme);
                     }
                 }
-                
+
                 // Notify nav component to update logo
-                if let Ok(nav_toggle) = js_sys::Reflect::get(&window, &"__nav_theme_toggle".into()) {
+                if let Ok(nav_toggle) = js_sys::Reflect::get(&window, &"__nav_theme_toggle".into())
+                {
                     if let Ok(function) = nav_toggle.dyn_into::<js_sys::Function>() {
                         let _ = function.call0(&window);
                     }

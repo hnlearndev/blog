@@ -44,10 +44,8 @@ primary_region = 'sin'
 [deploy]
   strategy = 'rolling'
   max_unavailable = 0.5
+  release_command = "/app/sqlx migrate run"
 
-# Restart policy
-[processes]
-  app = './blog'
 
 # Optional: Auto-scaling configuration
 # Uncomment and adjust as needed for your traffic patterns
