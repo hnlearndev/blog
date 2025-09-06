@@ -6,6 +6,54 @@ use std::collections::HashMap;
 pub fn Nav() -> impl IntoView {
     let (mobile_menu_open, set_mobile_menu_open) = signal(false);
     let (clicked_links, set_clicked_links) = signal(HashMap::<String, String>::new());
+    let (is_dark_theme, set_is_dark_theme) = signal(false);
+
+    // Detect initial theme
+    #[cfg(feature = "hydrate")]
+    Effect::new(move |_| {
+        use web_sys::window;
+
+        if let Some(window) = window() {
+            // Check for stored theme preference first
+            if let Ok(Some(storage)) = window.local_storage() {
+                if let Ok(Some(stored_theme)) = storage.get_item("theme") {
+                    set_is_dark_theme.set(stored_theme == "dark");
+                    return;
+                }
+            }
+
+            // Fall back to system preference
+            if let Ok(Some(media_query)) = window.match_media("(prefers-color-scheme: dark)") {
+                set_is_dark_theme.set(media_query.matches());
+            }
+        }
+    });
+
+    // Create a function to toggle theme (to be called from ThemeToggle)
+    let _toggle_theme = move || {
+        set_is_dark_theme.update(|dark| *dark = !*dark);
+    };
+
+    // Provide the toggle function to the document for ThemeToggle to use
+    #[cfg(feature = "hydrate")]
+    Effect::new(move |_| {
+        use wasm_bindgen::JsCast;
+        use web_sys::{window, js_sys};
+
+        if let Some(window) = window() {
+            let closure = wasm_bindgen::closure::Closure::wrap(Box::new(move || {
+                _toggle_theme();
+            }) as Box<dyn Fn()>);
+
+            // Store the closure on the window object so ThemeToggle can access it
+            let _ = js_sys::Reflect::set(
+                &window,
+                &"__nav_theme_toggle".into(),
+                closure.as_ref().unchecked_ref()
+            );
+            closure.forget();
+        }
+    });
 
     let toggle_mobile_menu = move |_: MouseEvent| {
         set_mobile_menu_open.update(|open| *open = !*open);
@@ -52,13 +100,13 @@ pub fn Nav() -> impl IntoView {
             <div class="nav-brand">
                 <FastA href="/" class="brand-link">
                     <img
-                        src="/favicon.ico"
+                        src=move || if is_dark_theme.get() { "/dark_logo.svg" } else { "/light_logo.svg" }
                         alt="Brand Logo"
                         width="32"
                         height="32"
                         style="vertical-align: middle; margin-right: 0.5rem;"
                     />
-                    <strong>"Willian Nguyen"</strong>
+                    <strong style="font-size: 1.2rem;">"Willian Nguyen"</strong>
                 </FastA>
             </div>
 
@@ -168,7 +216,7 @@ pub fn Nav() -> impl IntoView {
                     <ul class="mobile-nav-links">
                         <li class="mobile-nav-item">
                             <div on:click=close_mobile_menu>
-                                <FastA href="/blog" class="mobile-nav-link">
+                                <FastA href="/posts" class="mobile-nav-link">
                                     <div class="mobile-nav-icon">
                                         <BlogIcon />
                                     </div>
@@ -214,12 +262,12 @@ pub fn Nav() -> impl IntoView {
                                 let click_state = clicked_links.get().get("mobile-github").cloned().unwrap_or_default();
                                 format!("mobile-social-link {}", click_state)
                             }
+                            title="GitHub"
                             on:click=handle_link_click("mobile-github".to_string())
                         >
                             <div class="mobile-social-icon">
                                 <GitHubIcon />
                             </div>
-                            <span>"GitHub"</span>
                         </a>
                         <a
                             href="https://www.linkedin.com/in/hieunthello/"
@@ -228,12 +276,12 @@ pub fn Nav() -> impl IntoView {
                                 let click_state = clicked_links.get().get("mobile-linkedin").cloned().unwrap_or_default();
                                 format!("mobile-social-link {}", click_state)
                             }
+                            title="LinkedIn"
                             on:click=handle_link_click("mobile-linkedin".to_string())
                         >
                             <div class="mobile-social-icon">
                                 <LinkedInIcon />
                             </div>
-                            <span>"LinkedIn"</span>
                         </a>
                         <a
                             href="mailto:hieunt.hello@gmail.com"
@@ -241,12 +289,12 @@ pub fn Nav() -> impl IntoView {
                                 let click_state = clicked_links.get().get("mobile-email").cloned().unwrap_or_default();
                                 format!("mobile-social-link {}", click_state)
                             }
+                            title="Email"
                             on:click=handle_link_click("mobile-email".to_string())
                         >
                             <div class="mobile-social-icon">
                                 <ContactIcon />
                             </div>
-                            <span>"Email"</span>
                         </a>
                     </div>
                 </div>

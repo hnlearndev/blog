@@ -1,4 +1,4 @@
-# Willian's Tech Blog
+# Willian's Personal Blog
 
 ## Architecture Overview
 
@@ -48,45 +48,131 @@ This application follows a **full-stack Rust architecture** using:
 
 ## Project Structure
 
+### Frontend (Leptos)
+
 ```text
 src/
-├── app.rs                 # Leptos app component and routing
-├── client.rs              # Client-side hydration entry point
-├── main.rs                # Server entry point
-├── lib.rs                 # Library root
-├── server.rs              # Server configuration and setup
-├── shared.rs              # Shared utilities
+├── app.rs                 # App component and routing
+├── client.rs              # Client-side hydration entry
 ├── app/
-│   ├── homepage.rs        # Home page component
-│   ├── postpage.rs        # Blog post page component
-│   ├── nav.rs             # Navigation component
-│   ├── footer.rs          # Footer component
-│   ├── subscribe_form.rs  # Newsletter subscription form
-│   ├── helpers.rs         # UI helper functions
-│   └── icons.rs           # Icon components
-└── server/
+│   ├── components.rs      # Component module definitions
+│   ├── pages.rs           # Page module definitions
+│   ├── helpers.rs         # UI utility functions
+│   ├── components/
+│   │   ├── nav.rs         # Navigation component
+│   │   ├── footer.rs      # Footer component
+│   │   ├── theme_toggle.rs # Theme switcher
+│   │   ├── subscribe_form.rs # Newsletter form
+│   │   ├── content_list.rs # Content listing
+│   │   ├── fast_a.rs      # Optimized anchor component
+│   │   └── icons.rs       # Icon components
+│   └── pages/
+│       ├── homepage.rs    # Home page
+│       ├── postpage.rs    # Blog post page
+│       └── poempage.rs    # Poetry page
+```
+
+### Backend Architecture
+
+```text
+├── main.rs                # Application entry point
+├── server.rs              # Server orchestration & middleware stack
+└── server/                # Modular backend architecture
+    ├── db.rs              # Database module coordinator
     ├── db/
-    │   ├── config.rs      # Database configuration
-    │   ├── pool.rs        # Connection pool setup
-    │   ├── state.rs       # Application state
-    │   └── error.rs       # Database error handling
+    │   ├── config.rs      # Database URL & connection config
+    │   ├── pool.rs        # PgPool initialization & management
+    │   ├── state.rs       # AppState with shared resources
+    │   └── error.rs       # Database-specific error handling
+    ├── middleware.rs      # Middleware module coordinator
     ├── middleware/
-    │   ├── governor.rs    # Rate limiting
-    │   ├── csrf.rs        # CSRF protection
+    │   ├── cache.rs       # HTTP caching strategies
+    │   ├── governor.rs    # Rate limiting (IP-based)
+    │   ├── csrf.rs        # CSRF token protection
     │   ├── throttle.rs    # Request throttling
+    │   ├── global_layer.rs # Middleware layer coordinator
     │   └── global_layer/
-    │       ├── cors.rs    # CORS configuration
-    │       └── security_headers.rs  # Security headers
+    │       ├── cors.rs    # Cross-Origin Resource Sharing
+    │       └── security_headers.rs # Security headers middleware
+    ├── models.rs          # Data model coordinator
     ├── models/
-    │   └── subscriber.rs  # Data models
-    ├── handlers/
-    │   └── subscriber.rs  # Request handlers
-    ├── services/
-    │   └── subscriber.rs  # Business logic
+    │   └── subscriber.rs  # Newsletter subscriber model
+    ├── repositories.rs    # Data access coordinator
     ├── repositories/
-    │   └── subscriber.rs  # Data access layer
+    │   └── subscriber.rs  # Database queries & data access
+    ├── services.rs        # Business logic coordinator
+    ├── services/
+    │   └── subscriber.rs  # Newsletter business logic
+    ├── handlers.rs        # Request handler coordinator
+    ├── handlers/
+    │   └── subscriber.rs  # HTTP request/response handling
+    ├── routes.rs          # API route coordinator
     └── routes/
-        └── subscriber.rs  # API routes
+        └── subscriber.rs  # Newsletter API endpoints
+```
+
+### Backend Layer Relationships
+
+```text
+Data Flow & Dependencies:
+
+┌──────────────────────────────────┐
+│          Middleware Stack        │  Global & Route-specific middleware
+│  (Applied in server.rs & routes/)│
+└──────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────┐     ┌─────────────┐
+│  Handlers   │───▶│   Routes    │  Routes use handlers
+└─────────────┘     └─────────────┘
+      ▲
+      │ Handlers use services
+┌─────────────┐
+│  Services   │
+└─────────────┘
+      ▲
+      │ Services use repositories
+┌─────────────┐
+│Repositories │
+└─────────────┘
+    ▲       ▲
+    │       │ Repositories use both models and DB
+┌───────┐  ┌───────┐
+│ Models│  |  DB   │
+└───────┘  └───────┘
+
+Middleware Implementation:
+• Global: Applied in server.rs (compression, timeout, CORS, security headers)
+• Route-specific: Applied in routes/ modules (rate limiting, CSRF, caching)
+  Example: subscriber routes apply no_cache, governor, throttle, and CSRF layers
+
+Layer Responsibilities:
+• Routes: HTTP endpoints + middleware application, delegate to handlers
+• Handlers: HTTP request/response processing, input validation
+• Services: Business logic, orchestration, transaction management
+• Repositories: Data access queries, DB operations using models
+• Models: Data structures, serialization, validation rules
+• DB: Connection pooling, configuration, state management
+
+```
+
+### Server.rs Architecture Flow
+
+```text
+server::run() execution flow:
+1. Environment & logging setup
+2. Database pool initialization
+3. AppState creation with shared resources
+4. Leptos route generation
+5. Middleware stack assembly (outermost → innermost):
+   ├── CompressionLayer (Brotli)
+   ├── TimeoutLayer (30s)
+   ├── TraceLayer (request logging)
+   ├── CORS layer
+   └── Security headers
+6. Leptos routes integration
+7. API routes merging (subscriber endpoints)
+8. Server binding & startup
 ```
 
 ## Build System
@@ -126,3 +212,20 @@ The project uses a custom build script (`build.rs`) that:
 **Status**: Planned
 
 Will add a middleware layer to catch errors, log them, and provide consistent user-friendly responses. Implementation is postponed until the app grows in complexity.
+
+### Modulized global layer
+
+**Status**: Planned
+
+This should be a good practise, however, from my point of view, refactor this out of server.rs run is more troublesome than expected.
+
+## Reference
+
+- [FullStack Rust with Axum from Martin Fabio](https://www.amazon.com/FullStack-Rust-Axum-Server-Rendered-High-Performance-ebook/dp/B0FM6XF8YX).
+- [Leptos resources](https://leptos.dev/)
+- [awesome-leptos repo](https://github.com/leptos-rs/awesome-leptos)
+- The wild internet and various other sources.
+
+## Reflection
+
+A personal reflection on this project can be found on this blog as well. Read my [project reflection post](https://williannguyen.com/posts/4).

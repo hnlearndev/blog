@@ -99,7 +99,8 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: var(--pico-muted-color);
+  background-color: var(--pico-background-color);
+  border: 1px solid var(--pico-muted-border-color);
   border-radius: 0.5625rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
@@ -115,7 +116,7 @@
   left: 0.09375rem;
   width: 0.9375rem;
   height: 0.9375rem;
-  background-color: #fff;
+  background-color: var(--pico-background-color);
   border-radius: 50%;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -147,7 +148,7 @@
 }
 
 .theme-toggle__icon--moon {
-  color: #6366f1;
+  color: #ffffff;
 }
 
 .theme-toggle--light .theme-toggle__icon--sun {
@@ -168,6 +169,22 @@
 .theme-toggle--dark .theme-toggle__icon--moon {
   opacity: 1;
   transform: scale(1) rotate(0deg);
+}
+
+/* Light mode specific styling */
+.theme-toggle--light .theme-toggle__track {
+  background-color: #ffffff;
+  border: 1px solid var(--pico-muted-border-color);
+}
+
+.theme-toggle--light .theme-toggle__thumb {
+  background-color: #ffffff;
+}
+
+/* Dark mode specific styling */
+.theme-toggle--dark .theme-toggle__track {
+  background-color: #6b7280;
+  border: 1px solid var(--pico-muted-border-color);
 }
 
 /* Social Media Icons */
@@ -253,10 +270,14 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .mobile-nav-item {
   margin: 0;
+  width: 100%;
 }
 
 .mobile-nav-link {
@@ -301,30 +322,33 @@
   padding-top: 1rem;
   border-top: 1px solid var(--pico-muted-border-color);
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .mobile-social-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
   text-decoration: none;
   color: inherit;
-  border-radius: 0.375rem;
-  transition: background-color 0.2s ease;
-  font-weight: 500;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  opacity: 0.7;
 }
 
 .mobile-social-link:hover {
+  opacity: 1;
   background-color: var(--pico-muted-color);
+  transform: translateY(-2px);
   text-decoration: none;
 }
 
 .mobile-social-icon {
   flex-shrink: 0;
-  opacity: 0.8;
 }
 
 .mobile-social-link:hover .mobile-social-icon {

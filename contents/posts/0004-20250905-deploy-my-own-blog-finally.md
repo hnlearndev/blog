@@ -43,4 +43,4 @@ From my point of view, my over-engineered project is no different from a newbie'
 
 Recently, I had a small conversation with an old friend. He chooses to live simply and avoids anything that would complicate his life. I nodded and told myself I should follow his advice. Yet, over this learning journey, I have gained more than just the knowledge I have been seeking. I came to appreciate complexity - the "right" complexity. Gems, you need to hike the extra mile across the hills to see what I really mean.
 
-For more details on technical discussion, please visit the [repo]().
+For more details on technical discussion, please visit the [repo](https://github.com/hnlearndev/blog).
