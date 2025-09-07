@@ -74,7 +74,7 @@ src/
 │       └── poempage.rs    # Poetry page
 ```
 
-### Backend Architecture
+### Backend (Axum) Architecture
 
 ```text
 ├── main.rs                # Application entry point
@@ -223,7 +223,7 @@ This should be a good practise, however, from my point of view, refactor this ou
 
 ## Reference
 
-- [FullStack Rust with Axum from Martin Fabio](https://www.amazon.com/FullStack-Rust-Axum-Server-Rendered-High-Performance-ebook/dp/B0FM6XF8YX).
+- Book [FullStack Rust with Axum from Martin Fabio](https://www.amazon.com/FullStack-Rust-Axum-Server-Rendered-High-Performance-ebook/dp/B0FM6XF8YX)
 - [Leptos resources](https://leptos.dev/)
 - [awesome-leptos repo](https://github.com/leptos-rs/awesome-leptos)
 - The wild internet, AIs and various other sources...
