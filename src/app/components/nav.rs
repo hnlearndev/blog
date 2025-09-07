@@ -64,13 +64,24 @@ pub fn Nav() -> impl IntoView {
     };
 
     let handle_link_click = move |link_id: String| {
-        move |_: MouseEvent| {
+        move |_event: MouseEvent| {
+            // Remove focus from the clicked element to prevent purple ring
+            #[cfg(feature = "hydrate")]
+            {
+                if let Some(target) = _event.target() {
+                    use wasm_bindgen::JsCast;
+                    if let Ok(element) = target.dyn_into::<web_sys::HtmlElement>() {
+                        let _ = element.blur();
+                    }
+                }
+            }
+
             // Add clicked class immediately
             set_clicked_links.update(|links| {
                 links.insert(link_id.clone(), "clicked".to_string());
             });
 
-            // Start reset animation after 500ms
+            // Start reset animation after 200ms
             let link_id_clone1 = link_id.clone();
             set_timeout(
                 move || {
@@ -78,7 +89,7 @@ pub fn Nav() -> impl IntoView {
                         links.insert(link_id_clone1, "reset-animation".to_string());
                     });
                 },
-                std::time::Duration::from_millis(500),
+                std::time::Duration::from_millis(200),
             );
 
             // Complete reset after animation finishes
@@ -89,7 +100,7 @@ pub fn Nav() -> impl IntoView {
                         links.remove(&link_id_clone2);
                     });
                 },
-                std::time::Duration::from_millis(800),
+                std::time::Duration::from_millis(400),
             );
         }
     };

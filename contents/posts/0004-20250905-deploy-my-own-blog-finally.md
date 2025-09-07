@@ -43,8 +43,8 @@ From my point of view, my over-engineered project is no different from a newbie'
 
 Recently, I had a small conversation with an old friend. He chooses to live simply and avoids anything that would complicate his life. I nodded and told myself I should follow his advice. Yet, over this learning journey, I have gained more than just the knowledge I have been seeking. I came to appreciate complexity - the "right" complexity. Gems, you need to hike the extra mile across the hills to see what I really mean.
 
-## Why this is important?
+## Why is this important?
 
-Full launch a personal website with industry-graded architecture is an important milestone to me personally. I cannot agree more with an old Chinese proverb "A journey of a thousand miles begins with a single step". Indeed the hardest part is to get started. Overtime, more features will be added as I shall deepen my knowledge in full stack with the latest industry practises. I will updates them regularly as the project expands further. Stay tune.
+Fully launching a personal website with industry-grade architecture is a significant milestone for me personally. I could not agree more with an old Chinese proverb: "A journey of a thousand miles begins with a single step." Indeed, the hardest part is to get started. Over time, more features will be added as I deepen my knowledge in full-stack development with the latest industry practices. I will update them regularly as the project expands further. Stay tuned.
 
 For more details on technical discussion, please visit the [repo](https://github.com/hnlearndev/blog).

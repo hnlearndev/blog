@@ -36,7 +36,7 @@ pub fn ThemeToggle() -> impl IntoView {
         }
     });
 
-    let toggle_theme = move |_: MouseEvent| {
+    let toggle_theme = move |_event: MouseEvent| {
         let new_is_dark = !is_dark.get();
         set_is_dark.set(new_is_dark);
 
@@ -53,6 +53,14 @@ pub fn ThemeToggle() -> impl IntoView {
                     }
                 }
 
+                // Remove focus from the button to prevent purple ring
+                if let Some(target) = _event.target() {
+                    use wasm_bindgen::JsCast;
+                    if let Ok(button) = target.dyn_into::<web_sys::HtmlElement>() {
+                        let _ = button.blur();
+                    }
+                }
+
                 // Notify nav component to update logo
                 if let Ok(nav_toggle) = js_sys::Reflect::get(&window, &"__nav_theme_toggle".into())
                 {
@@ -66,23 +74,18 @@ pub fn ThemeToggle() -> impl IntoView {
 
     view! {
         <button
-            class=move || format!(
-                "theme-toggle {}",
-                if is_dark.get() { "theme-toggle--dark" } else { "theme-toggle--light" }
-            )
+            class="theme-toggle"
             on:click=toggle_theme
             title=move || if is_dark.get() { "Switch to light mode" } else { "Switch to dark mode" }
             aria-label=move || if is_dark.get() { "Switch to light mode" } else { "Switch to dark mode" }
         >
-            <div class="theme-toggle__track">
-                <div class="theme-toggle__thumb">
-                    <div class="theme-toggle__icon theme-toggle__icon--sun">
-                        <SunIcon />
-                    </div>
-                    <div class="theme-toggle__icon theme-toggle__icon--moon">
-                        <MoonIcon />
-                    </div>
-                </div>
+            <div class="theme-toggle__icon">
+                <Show
+                    when=move || is_dark.get()
+                    fallback=move || view! { <MoonIcon /> }
+                >
+                    <SunIcon />
+                </Show>
             </div>
         </button>
     }
