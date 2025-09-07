@@ -30,10 +30,10 @@ src/
     components/    # UI components (nav, footer, theme toggle, etc.)
     pages/         # Route-level pages (home, post, poem)
     helpers.rs     # Shared utilities
-server.rs          # Axum server setup
-server/            # Backend modules (db, middleware, models, routes)
-build.rs           # Static content build script
-contents/          # Markdown posts
+  server.rs          # Axum server setup
+  server/            # Backend modules (db, middleware, models, routes)
+  build.rs           # Static content build script
+  contents/          # Markdown posts
 ```
 
 ## Build & Deploy
