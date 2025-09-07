@@ -41,6 +41,13 @@ src/
 - Build with `cargo-leptos`
 - Deploy to Fly.io with managed Postgres
 
+## Reference
+
+- Book [FullStack Rust with Axum from Martin Fabio](https://www.amazon.com/FullStack-Rust-Axum-Server-Rendered-High-Performance-ebook/dp/B0FM6XF8YX)
+- [Leptos resources](https://leptos.dev/)
+- [awesome-leptos repo](https://github.com/leptos-rs/awesome-leptos)
+- The wild internet, AIs and various other sources...
+
 ## Reflection
 
 A personal reflection on this project can be found [on this blog post](https://williannguyen.com/posts/4).
