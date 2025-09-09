@@ -111,9 +111,6 @@ However, the industry-graded architecture is purposely used to study fullstack t
 
 ### 🏘️ Backend Layer Relationships
 
-<div style="display: flex; gap: 2em;">
-  <div style="flex: 1; min-width: 300px;">
-
 ```mermaid
 graph TD
   Middleware["🧩 Middleware Stack<br/>(server.rs & routes/)"]
@@ -125,33 +122,28 @@ graph TD
   Repositories -->|Use| DB["🗄️ DB"]
 ```
 
-</div>
-  <div style="flex: 1; min-width: 300px;">
-    <b>Middleware & Security Features</b>
-      <ul>
-        <li>Rate Limiting: Per-IP request throttling using Governor</li>
-        <li>CORS: Cross-Origin Resource Sharing configuration</li>
-        <li>CSRF Protection: Token-based CSRF mitigation</li>
-        <li>Security Headers: Comprehensive HTTP security headers</li>
-        <li>Request Timeout: Configurable request timeouts</li>
-        <li>Compression: Brotli compression for responses</li>
-      </ul>
-    <b>Middleware Implementation</b>
-      <ul>
-        <li>Global: Applied in server.rs (compression, timeout, CORS, security headers)</li>
-        <li>Route-specific: Applied in routes/ modules. For example, subscriber routes apply no_cache, governor, throttle, and CSRF layers.</li>
-      </ul>
-    <b>Layer Responsibilities</b>
-      <ul>
-        <li>Routes: HTTP endpoints + middleware application, delegate to handlers</li>
-        <li>Handlers: HTTP request/response processing, input validation</li>
-        <li>Services: Business logic, orchestration, transaction management</li>
-        <li>Repositories: Data access queries, DB operations using models</li>
-        <li>Models: Data structures, serialization, validation rules</li>
-        <li>DB: Connection pooling, configuration, state management</li>
-      </ul>
-  </div>
-</div>
+#### Middleware & Security Features
+
+- Rate Limiting: Per-IP request throttling using Governor
+- CORS: Cross-Origin Resource Sharing configuration
+- CSRF Protection: Token-based CSRF mitigation
+- Security Headers: Comprehensive HTTP security headers
+- Request Timeout: Configurable request timeouts
+- Compression: Brotli compression for responses
+
+#### Middleware Implementation
+
+- Global: Applied in server.rs (compression, timeout, CORS, security headers)
+- Route-specific: Applied in routes/ modules. For example, subscriber routes apply no_cache, governor, throttle, and CSRF layers.
+
+#### Layer Responsibilities
+
+- Routes: HTTP endpoints + middleware application, delegate to handlers
+- Handlers: HTTP request/response processing, input validation
+- Services: Business logic, orchestration, transaction management
+- Repositories: Data access queries, DB operations using models
+- Models: Data structures, serialization, validation rules
+- DB: Connection pooling, configuration, state management
 
 ## Build System
 
