@@ -27,7 +27,7 @@ The reasons are:
 
 Your best guess?
 
-- Available solutions are really scarce.
+- At the time this blog is built, available solutions are really scarce. Please, take a look at the repo [awesome-leptos](https://github.com/leptos-rs/awesome-leptos) ans start counting to confirm my statement.
 - Material exposure is limited to AI models.
 - Even if there are, they might not function under the fast-paced progress of the Rust-lang and Leptos framework.
 

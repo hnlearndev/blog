@@ -43,9 +43,9 @@ pub fn App() -> impl IntoView {
     provide_meta_context();
 
     view! {
-        <Stylesheet id="leptos" href="/pico.min.css" />
-        <Stylesheet id="nav-styles" href="/nav-styles.css" />
-        <Stylesheet id="footer-styles" href="/footer-styles.css" />
+        <Stylesheet id="leptos" href="/style/pico.min.css" />
+        <Stylesheet id="nav-styles" href="/style/nav-styles.css" />
+        <Stylesheet id="footer-styles" href="/style/footer-styles.css" />
 
         <Title text="Welcome to Willian's blog" />
 
