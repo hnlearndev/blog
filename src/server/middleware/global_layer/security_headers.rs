@@ -10,7 +10,7 @@ use axum::{
 
 pub async fn security_headers(req: Request<Body>, next: Next) -> Response {
     let mut res = next.run(req).await;
-    
+
     let headers: [(&str, &str); 5] = [
         ("x-content-type-options", "nosniff"),
         ("x-frame-options", "DENY"),

@@ -38,7 +38,7 @@ pub fn Nav() -> impl IntoView {
     #[cfg(feature = "hydrate")]
     Effect::new(move |_| {
         use wasm_bindgen::JsCast;
-        use web_sys::{window, js_sys};
+        use web_sys::{js_sys, window};
 
         if let Some(window) = window() {
             let closure = wasm_bindgen::closure::Closure::wrap(Box::new(move || {
@@ -49,7 +49,7 @@ pub fn Nav() -> impl IntoView {
             let _ = js_sys::Reflect::set(
                 &window,
                 &"__nav_theme_toggle".into(),
-                closure.as_ref().unchecked_ref()
+                closure.as_ref().unchecked_ref(),
             );
             closure.forget();
         }

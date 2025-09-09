@@ -1,9 +1,7 @@
-use tower_governor::{
-    GovernorLayer,
-    governor::GovernorConfigBuilder,
-    key_extractor::PeerIpKeyExtractor,
-};
 use governor::middleware::NoOpMiddleware;
+use tower_governor::{
+    GovernorLayer, governor::GovernorConfigBuilder, key_extractor::PeerIpKeyExtractor,
+};
 
 use axum::body::Body;
 

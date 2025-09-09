@@ -10,5 +10,3 @@ pub fn HomePage() -> impl IntoView {
         <p>"Anything that I learn and find interesting, I will write about it on my blog."</p>
     }
 }
-
-

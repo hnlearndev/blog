@@ -5,4 +5,3 @@ pub struct SubscribeResponse {
     pub status: String,
     pub message: String,
 }
-

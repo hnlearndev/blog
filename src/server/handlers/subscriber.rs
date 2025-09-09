@@ -33,17 +33,15 @@ pub async fn subscribe_handler(
         })),
         Err(e) => {
             // Example: check for unique violation (already subscribed)
-            if let Some(db_err) = e.as_database_error() {
-                if let Some(code) = db_err.code() {
-                    if code == "23505" {
-                        // Unique violation in Postgres
-                        return Ok(Json(SubscribeResponse {
-                            status: "warning".to_string(),
-                            message: "You're already subscribed with this email address."
-                                .to_string(),
-                        }));
-                    }
-                }
+            if let Some(db_err) = e.as_database_error()
+                && let Some(code) = db_err.code()
+                && code == "23505"
+            {
+                // Unique violation in Postgres
+                return Ok(Json(SubscribeResponse {
+                    status: "warning".to_string(),
+                    message: "You're already subscribed with this email address.".to_string(),
+                }));
             }
             Err(axum::http::StatusCode::INTERNAL_SERVER_ERROR)
         }

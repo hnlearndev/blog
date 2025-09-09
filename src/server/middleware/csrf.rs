@@ -1,12 +1,12 @@
 use axum::{
+    body::Body,
     http::{Request, StatusCode},
     middleware::Next,
     response::Response,
-    body::Body,
 };
 use axum_extra::extract::cookie::CookieJar;
-use rand::RngCore;
 use base64::{Engine as _, engine::general_purpose};
+use rand::RngCore;
 
 const CSRF_HEADER: &str = "x-csrf-token";
 const CSRF_COOKIE: &str = "csrf_token";

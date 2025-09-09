@@ -1,8 +1,12 @@
 # Willian's Personal Blog
 
-The blog is at [wiiliannguyen.com](https://www.williannguyen.com)
+The final product is [williannguyen.com](https://williannguyen.com).
 
-## Architecture Overview
+Full personal reflection on this project can be found on this [post](https://williannguyen.com/posts/4).
+
+PS: It works. If it does not, please dm me. Thank you for your helps.
+
+## ARCHITECTURE OVERVIEW
 
 This application follows a **full-stack Rust architecture** using:
 
@@ -12,7 +16,7 @@ This application follows a **full-stack Rust architecture** using:
 - **Content**: Markdown-based blog posts with syntax highlighting
 - **Build System**: Custom build script for static content generation
 
-## Tech Stack
+## TECH STACK
 
 ### Core Framework
 
@@ -32,15 +36,6 @@ This application follows a **full-stack Rust architecture** using:
 - **[syntect](https://docs.rs/syntect/)** - Syntax highlighting for code blocks
 - **Static Content Generation** - Build-time markdown processing
 
-### Middleware & Security
-
-- **Rate Limiting** - Per-IP request throttling using Governor
-- **CORS** - Cross-Origin Resource Sharing configuration
-- **CSRF Protection** - Token-based CSRF mitigation
-- **Security Headers** - Comprehensive HTTP security headers
-- **Request Timeout** - Configurable request timeouts
-- **Compression** - Brotli compression for responses
-
 ### Development & Deployment
 
 - **[cargo-leptos](https://crates.io/crates/cargo-leptos)** - Leptos build tool
@@ -48,11 +43,11 @@ This application follows a **full-stack Rust architecture** using:
 - **WASM Optimization** - Size-optimized WebAssembly builds
 - **End-to-End Testing** - Playwright integration
 
-## Project Structure
+## PROJECT STRUCTURE
 
 ### 🌐 Frontend (Leptos)
 
-The implementation is  obtained from cargo-leptos axum template provided from. For more detail, please follow the the [instruction](https://github.com/leptos-rs/start-axum).
+The implementation is  obtained from cargo-leptos axum template. For more detail, please follow the the [instruction](https://github.com/leptos-rs/start-axum).
 
 ```text
 src/
@@ -124,17 +119,14 @@ graph TD
 
 #### Middleware & Security Features
 
-- Rate Limiting: Per-IP request throttling using Governor
-- CORS: Cross-Origin Resource Sharing configuration
-- CSRF Protection: Token-based CSRF mitigation
-- Security Headers: Comprehensive HTTP security headers
-- Request Timeout: Configurable request timeouts
-- Compression: Brotli compression for responses
-
-#### Middleware Implementation
-
-- Global: Applied in server.rs (compression, timeout, CORS, security headers)
-- Route-specific: Applied in routes/ modules. For example, subscriber routes apply no_cache, governor, throttle, and CSRF layers.
+- **Global**
+  - Compression: Brotli compression for responses
+  - Request Timeout: Configurable request timeouts
+  - Security Headers: Comprehensive HTTP security headers
+- **Route specific**
+  - Rate Limiting: Per-IP request throttling using Governor
+  - CORS: Cross-Origin Resource Sharing configuration
+  - CSRF Protection: Token-based CSRF mitigation
 
 #### Layer Responsibilities
 
@@ -145,7 +137,7 @@ graph TD
 - Models: Data structures, serialization, validation rules
 - DB: Connection pooling, configuration, state management
 
-## Build System
+## BUILD SYSTEM
 
 The project uses a custom build script (`build.rs`) that:
 
@@ -154,7 +146,7 @@ The project uses a custom build script (`build.rs`) that:
 3. **Static Generation**: Converts markdown to HTML at build time
 4. **Optimized Output**: Generates Rust code with static post data
 
-## Performance Features
+## PERFORMANCE FEATURES
 
 - **Server-Side Rendering (SSR)**: Fast initial page loads
 - **Hydration**: Interactive client-side features without full SPA overhead
@@ -165,7 +157,7 @@ The project uses a custom build script (`build.rs`) that:
 - **HTTP Caching Strategy**: Multi-tier caching system for optimal performance
 - **WASM Optimization**: Aggressive size optimization for client-side bundles
 
-## WASM Bundle Optimization
+## WASM BUNDLE OPTIMIZATION
 
 The WebAssembly build process includes several standard optimization techniques to minimize bundle size:
 
@@ -195,7 +187,7 @@ Below information is  obtained from the actual implementation on the project and
 - **Better mobile experience**: Smaller bundles improve performance on slower connections
 - **Production ready**: Size is now within reasonable limits for web deployment
 
-## Caching
+## CACHING
 
 Deploy standard industry practices
 
@@ -212,15 +204,11 @@ Deploy standard industry practices
 
 - Centralized Error Handling (**Status**: Planned)
 
-Will add a middleware layer to catch errors, log them, and provide consistent user-friendly responses. Implementation is postponed until the app grows in complexity.
+ To add a middleware layer to catch errors, log them, and provide consistent user-friendly responses. Implementation is postponed until the app grows in complexity.
 
 - Modulized global layer (**Status**: Planned)
 
-This was planned out at the begginning with `tower` crate 's ServiceBuilder as a global layer which is then called into server.rs.
-
-However, refactoring this seperated out from server.rs run is more troublesome than expected.
-
-Until the project expands further, it is placed directly in server.rs.
+This was planned out at the begginning with `tower` crate 's ServiceBuilder as a global layer which is then called into server.rs. However, refactoring this seperated out from server.rs run is more troublesome than expected. Until the project expands further, it is placed directly in server.rs.
 
 ## Reference
 
