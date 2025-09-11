@@ -1,19 +1,28 @@
+use axum::body::Body;
+use governor::clock::QuantaInstant;
 use governor::middleware::NoOpMiddleware;
 use tower_governor::{
     GovernorLayer, governor::GovernorConfigBuilder, key_extractor::PeerIpKeyExtractor,
 };
 
-use axum::body::Body;
-
 /// Returns a GovernorLayer for subscriber API (e.g., 5 req/sec, burst 10)
-pub fn subscriber_governor() -> GovernorLayer<PeerIpKeyExtractor, NoOpMiddleware, Body> {
-    let governor_conf = Box::new(
-        GovernorConfigBuilder::default()
-            .per_second(5)
-            .burst_size(10)
-            .key_extractor(PeerIpKeyExtractor)
-            .finish()
-            .unwrap(),
-    );
-    GovernorLayer::new(governor_conf)
+pub fn subscriber_governor()
+-> GovernorLayer<PeerIpKeyExtractor, NoOpMiddleware<QuantaInstant>, Body> {
+    let config = GovernorConfigBuilder::default()
+        .per_second(5)
+        .burst_size(10)
+        .finish()
+        .unwrap();
+    GovernorLayer::new(Box::new(config))
+}
+
+/// Returns a GovernorLayer for status-badge API (e.g., 2 req/sec, burst 5)
+pub fn status_badge_governor()
+-> GovernorLayer<PeerIpKeyExtractor, NoOpMiddleware<QuantaInstant>, Body> {
+    let config = GovernorConfigBuilder::default()
+        .per_second(2) // 2 requests per second per IP
+        .burst_size(5) // allow short bursts
+        .finish()
+        .unwrap();
+    GovernorLayer::new(Box::new(config))
 }
