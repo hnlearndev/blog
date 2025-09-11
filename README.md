@@ -1,14 +1,14 @@
 # Willian's Personal Blog
 
+![Status](https://img.shields.io/badge/dynamic/json?url=https://williannguyen.com/status-badge&label=status&query=$.message&color=$.color)
+
 The final product is [williannguyen.com](https://williannguyen.com).
 
 Full personal reflection on this project can be found on this [post](https://williannguyen.com/posts/4).
 
-**PS**:
+**Note:**
 
-There is a regular status service to check that the website should work. This is one of the feature can be seen in the source code. If it does not, please dm me. Thank you for your helps.
-
-![Site Status](https://img.shields.io/endpoint?url=https://williannguyen.com/status-badge)
+_There is a regular status service to check that the website should work. This is one of the feature can be seen in the source code. If it does not (mismatch with status), please dm me. Thank you for your helps._
 
 ## ARCHITECTURE OVERVIEW
 

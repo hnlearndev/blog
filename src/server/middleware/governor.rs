@@ -1,3 +1,4 @@
+use super::forwarded_for_key_extractor::ForwardedForKeyExtractor;
 use axum::body::Body;
 use governor::clock::QuantaInstant;
 use governor::middleware::NoOpMiddleware;
@@ -18,10 +19,11 @@ pub fn subscriber_governor()
 
 /// Returns a GovernorLayer for status-badge API (e.g., 2 req/sec, burst 5)
 pub fn status_badge_governor()
--> GovernorLayer<PeerIpKeyExtractor, NoOpMiddleware<QuantaInstant>, Body> {
+-> GovernorLayer<ForwardedForKeyExtractor, NoOpMiddleware<QuantaInstant>, Body> {
     let config = GovernorConfigBuilder::default()
-        .per_second(2) // 2 requests per second per IP
-        .burst_size(5) // allow short bursts
+        .per_second(5) // 5 requests per second per IP
+        .burst_size(10) // allow short bursts
+        .key_extractor(ForwardedForKeyExtractor)
         .finish()
         .unwrap();
     GovernorLayer::new(Box::new(config))
