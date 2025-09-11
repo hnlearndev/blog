@@ -1,7 +1,7 @@
 use crate::server::db::state::AppState;
 use crate::server::services::subscriber::SubscriberService;
 use crate::shared::dto::SubscribeResponse;
-use axum::{Json, extract::State};
+use axum::{Json, extract::State, http::StatusCode};
 use serde::Deserialize;
 
 /// DTO for incoming subscription requests
@@ -17,7 +17,7 @@ pub struct SubscribeRequest {
 pub async fn subscribe_handler(
     State(app_state): State<AppState>,
     Json(request): Json<SubscribeRequest>,
-) -> Result<Json<SubscribeResponse>, axum::http::StatusCode> {
+) -> Result<Json<SubscribeResponse>, StatusCode> {
     match SubscriberService::subscribe(
         &app_state.db_pool,
         request.email,
@@ -43,7 +43,7 @@ pub async fn subscribe_handler(
                     message: "You're already subscribed with this email address.".to_string(),
                 }));
             }
-            Err(axum::http::StatusCode::INTERNAL_SERVER_ERROR)
+            Err(StatusCode::INTERNAL_SERVER_ERROR)
         }
     }
 }

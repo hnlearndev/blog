@@ -4,7 +4,11 @@ The final product is [williannguyen.com](https://williannguyen.com).
 
 Full personal reflection on this project can be found on this [post](https://williannguyen.com/posts/4).
 
-PS: It works. If it does not, please dm me. Thank you for your helps.
+**PS**:
+
+There is a regular status service to check that the website should work. This is one of the feature can be seen in the source code. If it does not, please dm me. Thank you for your helps.
+
+![Website Status](https://img.shields.io/endpoint?url=https://williannguyen.com/status-badge)
 
 ## ARCHITECTURE OVERVIEW
 
@@ -88,20 +92,25 @@ However, the industry-graded architecture is purposely used to study fullstack t
     │       ├── cors.rs                 # Cross-Origin Resource Sharing
     │       └── security_headers.rs     # Security headers middleware
     ├── models.rs           # Data model coordinator
-    ├── models/
-    │   └── subscriber.rs   # Newsletter subscriber model
-    ├── repositories.rs     # Data access coordinator
-    ├── repositories/
-    │   └── subscriber.rs   # Database queries & data access
-    ├── services.rs         # Business logic coordinator
-    ├── services/
-    │   └── subscriber.rs   # Newsletter business logic
-    ├── handlers.rs         # Request handler coordinator
-    ├── handlers/
-    │   └── subscriber.rs   # HTTP request/response handling
-    ├── routes.rs           # API route coordinator
-    └── routes/
-        └── subscriber.rs   # Newsletter API endpoints
+  ├── models/
+  │   ├── subscriber.rs   # Newsletter subscriber model
+  │   └── status.rs       # Status badge model (for shields.io)
+  ├── repositories.rs     # Data access coordinator
+  ├── repositories/
+  │   ├── subscriber.rs   # Database queries & data access
+  │   └── status.rs       # Status badge logic (checks and aggregates status)
+  ├── services.rs         # Business logic coordinator
+  ├── services/
+  │   ├── subscriber.rs   # Newsletter business logic
+  │   └── status.rs       # Status badge update logic (periodic background updater)
+  ├── handlers.rs         # Request handler coordinator
+  ├── handlers/
+  │   ├── subscriber.rs   # HTTP request/response handling
+  │   └── status.rs       # Status badge API handler (serves cached status)
+  ├── routes.rs           # API route coordinator
+  └── routes/
+    ├── subscriber.rs   # Newsletter API endpoints
+    └── status.rs       # Status badge API endpoint (`/status-badge` for shields.io)
 ```
 
 ### 🏘️ Backend Layer Relationships

@@ -12,11 +12,14 @@ use crate::app::shell;
 use crate::server::{
     db::{config, pool, state::AppState},
     middleware::global_layer::{cors_layer, security_headers},
-    routes::subscriber::subscriber_routes,
+    models::status::StatusBadge,
+    routes::{status::status_routes, subscriber::subscriber_routes},
+    services::status::StatusService,
 };
 use axum::{Router, middleware::from_fn};
 use leptos::prelude::*;
 use leptos_axum::{LeptosRoutes, generate_route_list};
+use std::sync::{Arc, Mutex};
 use std::time::Duration;
 use tower_http::{compression::CompressionLayer, timeout::TimeoutLayer, trace::TraceLayer};
 use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberInitExt};
@@ -24,6 +27,12 @@ use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberI
 /// Main server run function - called by main.rs
 #[cfg(feature = "ssr")]
 pub async fn run() {
+    // Shared status state
+    let status: Arc<Mutex<StatusBadge>> = Arc::new(Mutex::new(StatusBadge::unknown()));
+
+    // Start periodic status monitor
+    StatusService::start_status_monitor(status.clone());
+
     // Load environment variables from .env file
     dotenvy::dotenv().ok();
 
@@ -64,7 +73,8 @@ pub async fn run() {
         })
         .fallback(leptos_axum::file_and_error_handler(shell))
         .with_state(leptos_options.clone())
-        .merge(subscriber_routes().with_state(app_state));
+        .merge(subscriber_routes().with_state(app_state))
+        .merge(status_routes(status));
 
     // Start the server
     let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
