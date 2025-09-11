@@ -78,8 +78,8 @@ jobs:
       - name: Run migrations
         run: sqlx migrate run --database-url $DATABASE_URL
 
-      - name: Run tests
-        run: cargo test --features ssr
+      - name: Run tests with macro backtrace
+        run: cargo test --features ssr -- -Z macro-backtrace
 
   build:
     name: Build WASM

@@ -8,7 +8,7 @@ Full personal reflection on this project can be found on this [post](https://wil
 
 There is a regular status service to check that the website should work. This is one of the feature can be seen in the source code. If it does not, please dm me. Thank you for your helps.
 
-![Website Status](https://img.shields.io/endpoint?url=https://williannguyen.com/status-badge)
+![Site Status](https://img.shields.io/endpoint?url=https://williannguyen.com/status-badge)
 
 ## ARCHITECTURE OVERVIEW
 
