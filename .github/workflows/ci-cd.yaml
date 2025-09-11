@@ -34,7 +34,7 @@ jobs:
     needs: check
     services:
       postgres:
-        image: postgres:15
+        image: postgres:13
         ports:
           - 5432:5432
         env:
@@ -47,7 +47,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
-      DATABASE_URL: postgres://devuser:devpassword@127.0.0.1:5432/devdb
+      DATABASE_URL: postgres://devuser:devpassword@localhost:5432/devdb
       DB_HOST: localhost
       DB_PORT: 5432
       DB_USER: devuser
@@ -80,6 +80,9 @@ jobs:
 
       - name: Run tests with macro backtrace
         run: cargo test --features ssr -- -Z macro-backtrace
+
+      - name: Print Postgres logs
+        run: docker logs $(docker ps -q --filter "ancestor=postgres:15")
 
   build:
     name: Build WASM
