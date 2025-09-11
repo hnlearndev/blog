@@ -92,25 +92,25 @@ However, the industry-graded architecture is purposely used to study fullstack t
     │       ├── cors.rs                 # Cross-Origin Resource Sharing
     │       └── security_headers.rs     # Security headers middleware
     ├── models.rs           # Data model coordinator
-  ├── models/
-  │   ├── subscriber.rs   # Newsletter subscriber model
-  │   └── status.rs       # Status badge model (for shields.io)
-  ├── repositories.rs     # Data access coordinator
-  ├── repositories/
-  │   ├── subscriber.rs   # Database queries & data access
-  │   └── status.rs       # Status badge logic (checks and aggregates status)
-  ├── services.rs         # Business logic coordinator
-  ├── services/
-  │   ├── subscriber.rs   # Newsletter business logic
-  │   └── status.rs       # Status badge update logic (periodic background updater)
-  ├── handlers.rs         # Request handler coordinator
-  ├── handlers/
-  │   ├── subscriber.rs   # HTTP request/response handling
-  │   └── status.rs       # Status badge API handler (serves cached status)
-  ├── routes.rs           # API route coordinator
-  └── routes/
-    ├── subscriber.rs   # Newsletter API endpoints
-    └── status.rs       # Status badge API endpoint (`/status-badge` for shields.io)
+    ├── models/
+    │   ├── subscriber.rs   # Newsletter subscriber model
+    │   └── status.rs       # Status badge model (for shields.io)
+    ├── repositories.rs     # Data access coordinator
+    ├── repositories/
+    │   ├── subscriber.rs   # Database queries & data access
+    │   └── status.rs       # Status badge logic (checks and aggregates status)
+    ├── services.rs         # Business logic coordinator
+    ├── services/
+    │   ├── subscriber.rs   # Newsletter business logic
+    │   └── status.rs       # Status badge update logic (periodic background updater)
+    ├── handlers.rs         # Request handler coordinator
+    ├── handlers/
+    │   ├── subscriber.rs   # HTTP request/response handling
+    │   └── status.rs       # Status badge API handler (serves cached status)
+    ├── routes.rs           # API route coordinator
+    └── routes/
+      ├── subscriber.rs   # Newsletter API endpoints
+      └── status.rs       # Status badge AP endpoint (`/status-badge` for shields.io)
 ```
 
 ### 🏘️ Backend Layer Relationships
