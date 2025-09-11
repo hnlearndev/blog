@@ -18,6 +18,86 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
+          toolchain: nightly
+          components: rustfmt, clippy
+          targets: wasm32-unknown-unknown
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run clippy
+        run: cargo clippy --all-targets --features ssr -- -D warnings
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: check
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: devuser
+          POSTGRES_PASSWORD: devpassword
+          POSTGRES_DB: devdb
+        ports:
+          - 5432:5432
+    env:
+      DATABASE_URL: postgres://devuser:devpassword@localhost:5432/devdb
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_USER: devuser
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          targets: wasm32-unknown-unknown
+
+      - name: Wait for PostgreSQL
+        run: |
+          for i in {1..30}; do
+            pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER && break
+            sleep 1
+          done
+
+      - name: Run migrations
+        run: sqlx migrate run --database-url $DATABASE_URL
+
+      - name: Run tests
+        run: cargo test --features ssr
+
+  build:
+    name: Build WASM
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          targets: wasm32-unknown-unknown
+
+      - name: Install cargo-leptos
+        run: cargo install cargo-leptos
+
+      - name: Build Leptos WASM
+        run: cargo leptos build --release
+  check:
+    name: Check & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
           toolchain: stable
           components: rustfmt, clippy
           targets: wasm32-unknown-unknown
@@ -37,6 +117,20 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     needs: check
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: devuser
+          POSTGRES_PASSWORD: devpassword
+          POSTGRES_DB: devdb
+        ports:
+          - 5432:5432
+    env:
+      DATABASE_URL: postgres://devuser:devpassword@localhost:5432/devdb
+      DB_HOST: localhost
+      DB_PORT: 5432
+      DB_USER: devuser
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -46,6 +140,16 @@ jobs:
         with:
           toolchain: stable
           targets: wasm32-unknown-unknown
+
+      - name: Wait for PostgreSQL
+        run: |
+          for i in {1..30}; do
+            pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER && break
+            sleep 1
+          done
+
+      - name: Run migrations
+        run: sqlx migrate run --database-url $DATABASE_URL
 
       - name: Run tests
         run: cargo test --features ssr
