@@ -1,4 +1,8 @@
-# Willian's Personal Blog
+<h1 align="center">
+
+[![Willian Nguyen's blog](https://raw.githubusercontent.com/hnlearndev/static/refs/heads/main/blog/banner.svg)](https://williannguyen.com)
+
+</h1>
 
 ![Status](https://img.shields.io/badge/dynamic/json?url=https://williannguyen.com/status-badge&label=status&query=$.message&color=$.color)
 
@@ -109,8 +113,8 @@ However, the industry-graded architecture is purposely used to study fullstack t
     │   └── status.rs       # Status badge API handler (serves cached status)
     ├── routes.rs           # API route coordinator
     └── routes/
-      ├── subscriber.rs   # Newsletter API endpoints
-      └── status.rs       # Status badge AP endpoint (`/status-badge` for shields.io)
+        ├── subscriber.rs   # Newsletter API endpoints
+        └── status.rs       # Status badge AP endpoint (`/status-badge` for shields.io)
 ```
 
 ### 🏘️ Backend Layer Relationships

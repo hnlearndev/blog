@@ -23,7 +23,7 @@ pub fn status_badge_governor()
     let config = GovernorConfigBuilder::default()
         .per_second(5) // 5 requests per second per IP
         .burst_size(10) // allow short bursts
-        .key_extractor(ForwardedForKeyExtractor)
+        .key_extractor(ForwardedForKeyExtractor) // use custom key extractor
         .finish()
         .unwrap();
     GovernorLayer::new(Box::new(config))
