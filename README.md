@@ -1,6 +1,9 @@
 <h1 align="center">
 
-[![Willian Nguyen's blog](https://raw.githubusercontent.com/hnlearndev/static/refs/heads/main/blog/banner.svg)](https://williannguyen.com)
+<picture>
+  <source srcset="https://raw.githubusercontent.com/hnlearndev/static/refs/heads/main/blog/banner-dark.svg" media="(prefers-color-scheme: dark)">
+  <img src="https://raw.githubusercontent.com/hnlearndev/static/refs/heads/main/blog/banner-light.svg" alt="Willian Nguyen's blog">
+</picture>
 
 </h1>
 
