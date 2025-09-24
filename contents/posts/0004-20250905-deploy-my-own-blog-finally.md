@@ -27,7 +27,7 @@ The reasons are:
 
 Your best guess?
 
-- At the time this blog is built, available solutions are really scarce. Please, take a look at the repo [awesome-leptos](https://github.com/leptos-rs/awesome-leptos) ans start counting to confirm my statement.
+- At the time this blog was built, available solutions were really scarce. Please, take a look at the repo [awesome-leptos](https://github.com/leptos-rs/awesome-leptos) and start counting to confirm my statement.
 - Material exposure is limited to AI models.
 - Even if there are, they might not function under the fast-paced progress of the Rust-lang and Leptos framework.
 
@@ -45,6 +45,6 @@ Recently, I had a small conversation with an old friend. He chooses to live simp
 
 ## Why is this important?
 
-Fully launching a personal website with industry-grade architecture is a significant milestone for me personally. I could not agree more with an old Chinese proverb: "A journey of a thousand miles begins with a single step." Indeed, the hardest part is to get started. Over time, more features will be added as I deepen my knowledge in full-stack development with the latest industry practices. I will update them regularly as the project expands further. Stay tuned.
+Fully launching a personal website with industry-graded architecture is a significant milestone for me personally. I could not agree more with an old Chinese proverb: "A journey of a thousand miles begins with a single step." Indeed, the hardest part is to get started. Over time, more features will be added as I deepen my knowledge in full-stack development with the latest industry practices. I will update them regularly as the project expands further. Stay tuned.
 
 For more details on technical discussion, please visit the [repo](https://github.com/hnlearndev/blog).

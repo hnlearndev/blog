@@ -1,0 +1,49 @@
+# JJ IGNORE LIST
+
+## Environment variables and secrets
+
+.env
+.env.*
+!.env.example
+
+## Documentation (except README)
+
+*.md
+!README.md
+*.key
+*.pem
+*.cert
+*.crt
+
+## Private keys and certificates
+
+ssl/
+certs/
+*.p12
+*.pfx
+
+## Application secrets
+
+secrets/
+config/secrets.yml
+config/database.yml
+
+## Backup files
+
+*.bak
+*.backup
+*.old
+
+## Local development files
+
+.env.local
+.env.development
+.env.production
+
+## Fly.io secrets
+
+fly.secrets.toml
+
+## GitHub CI/CD workflows (not using GitHub Actions with Jujitsu)
+
+.github/workflows/

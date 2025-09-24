@@ -6,6 +6,7 @@ pub mod models;
 pub mod repositories;
 pub mod routes;
 pub mod services;
+pub mod utils;
 
 // Import necessary crates and modules
 use crate::app::shell;
