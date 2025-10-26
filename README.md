@@ -58,7 +58,7 @@ This application follows a **full-stack Rust architecture** using:
 
 ### 🌐 Frontend (Leptos)
 
-The implementation is  obtained from cargo-leptos axum template. For more detail, please follow the the [instruction](https://github.com/leptos-rs/start-axum).
+The implementation is obtained from cargo-leptos Axum template. For more detail, please follow the [instruction](https://github.com/leptos-rs/start-axum).
 
 ```text
 src/
@@ -188,13 +188,13 @@ The WebAssembly build process includes several standard optimization techniques 
 
 ### Benchmark Results
 
-Below information is  obtained from the actual implementation on the project and get benchmark to show the efficency of these technuques.
+Below information is obtained from the actual implementation on the project and get benchmark to show the efficency of these technuques.
 
-| Metric | Before Optimization | After Optimization | Improvement |
-|--------|--------------------|--------------------|-------------|
-| **Bundle Size** | 8.5MB | 1.5MB | **82.4% smaller** |
-| **Gzipped Size** | ~2.1MB | ~400-600KB | ~75% smaller |
-| **Load Time Impact** | Baseline | Significantly improved | 5.6x smaller |
+| Metric               | Before Optimization | After Optimization     | Improvement       |
+| -------------------- | ------------------- | ---------------------- | ----------------- |
+| **Bundle Size**      | 8.5MB               | 1.5MB                  | **82.4% smaller** |
+| **Gzipped Size**     | ~2.1MB              | ~400-600KB             | ~75% smaller      |
+| **Load Time Impact** | Baseline            | Significantly improved | 5.6x smaller      |
 
 ### Impact
 
@@ -220,7 +220,7 @@ Deploy standard industry practices
 
 - Centralized Error Handling (**Status**: Planned)
 
- To add a middleware layer to catch errors, log them, and provide consistent user-friendly responses. Implementation is postponed until the app grows in complexity.
+To add a middleware layer to catch errors, log them, and provide consistent user-friendly responses. Implementation is postponed until the app grows in complexity.
 
 - Modulized global layer (**Status**: Planned)
 

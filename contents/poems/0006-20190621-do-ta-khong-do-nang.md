@@ -1,4 +1,4 @@
-# Độ ta không độ nàng?
+# ĐỘ TA KHÔNG ĐỘ NÀNG?
 
 <div align="center">
 Cà sa đã khoác lên người
@@ -20,6 +20,9 @@ Hỏi trời xanh có độ nàng hay ta?
 Lấy mất nàng, để lại ta
 
 Người đi hay ở mới là đau hơn?
+
 </div>
 
-*PS: Cảm hứng đến từ [MV]( https://www.youtube.com/watch?v=Om75ZrBSTco) này.*
+-- Hứa Ngạng Thi Nhân --
+
+_PS: Cảm hứng đến từ [MV](https://www.youtube.com/watch?v=Om75ZrBSTco) này._

@@ -8,12 +8,13 @@ use axum::{
     response::Response,
 };
 use base64::{Engine as _, engine::general_purpose};
-use rand::RngCore;
+use rand::Rng;
+use rand::rngs::ThreadRng;
 use std::env;
 
 // Generate a nonce for CSP inline scripts
 fn generate_csp_nonce() -> String {
-    let mut rng = rand::rng();
+    let mut rng = ThreadRng::default();
     let mut bytes = [0u8; 16];
     rng.fill_bytes(&mut bytes);
     general_purpose::STANDARD.encode(bytes)

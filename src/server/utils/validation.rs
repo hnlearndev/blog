@@ -1,6 +1,6 @@
 use garde::Validate;
 use regex::Regex;
-use sha2::{Sha256, Digest};
+use sha2::{Digest, Sha256};
 use std::net::IpAddr;
 
 /// Email validation with additional security checks
@@ -14,53 +14,63 @@ impl EmailValidator {
     pub fn validate_email(email: &str) -> Result<String, String> {
         // Convert to lowercase for consistency
         let email = email.trim().to_lowercase();
-        
+
         // Check for basic email format using garde
-        let validator = EmailValidator { email: email.clone() };
-        validator.validate().map_err(|e| format!("Invalid email: {}", e))?;
-        
+        let validator = EmailValidator {
+            email: email.clone(),
+        };
+        validator
+            .validate()
+            .map_err(|e| format!("Invalid email: {}", e))?;
+
         // Additional security checks
-        
+
         // Check for email header injection attempts
         if email.contains('\n') || email.contains('\r') || email.contains('\0') {
             return Err("Invalid characters in email".to_string());
         }
-        
+
         // Check for multiple @ symbols
         if email.chars().filter(|c| *c == '@').count() != 1 {
             return Err("Invalid email format".to_string());
         }
-        
+
         // Check for dangerous patterns
         let dangerous_patterns = [
-            "<script", "javascript:", "data:", "vbscript:", 
-            "onclick", "onerror", "../", "..\\",
+            "<script",
+            "javascript:",
+            "data:",
+            "vbscript:",
+            "onclick",
+            "onerror",
+            "../",
+            "..\\",
         ];
-        
+
         for pattern in &dangerous_patterns {
             if email.to_lowercase().contains(pattern) {
                 return Err("Invalid email content".to_string());
             }
         }
-        
+
         // Validate domain part
         let parts: Vec<&str> = email.split('@').collect();
         if parts.len() != 2 {
             return Err("Invalid email format".to_string());
         }
-        
+
         let domain = parts[1];
-        
+
         // Check for valid domain format
         if !is_valid_domain(domain) {
             return Err("Invalid domain in email".to_string());
         }
-        
+
         // Check against disposable email domains (basic list)
         if is_disposable_email_domain(domain) {
             return Err("Disposable email addresses are not allowed".to_string());
         }
-        
+
         Ok(email)
     }
 }
@@ -71,19 +81,30 @@ fn is_valid_domain(domain: &str) -> bool {
     let domain_regex = Regex::new(
         r"^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
     ).unwrap();
-    
-    domain_regex.is_match(domain) && domain.contains('.') && !domain.starts_with('.') && !domain.ends_with('.')
+
+    domain_regex.is_match(domain)
+        && domain.contains('.')
+        && !domain.starts_with('.')
+        && !domain.ends_with('.')
 }
 
 /// Check against common disposable email domains
 fn is_disposable_email_domain(domain: &str) -> bool {
     const DISPOSABLE_DOMAINS: &[&str] = &[
-        "tempmail.com", "guerrillamail.com", "mailinator.com",
-        "10minutemail.com", "throwaway.email", "yopmail.com",
-        "temp-mail.org", "fakeinbox.com", "trashmail.com",
-        "maildrop.cc", "getairmail.com", "tempmail.net",
+        "tempmail.com",
+        "guerrillamail.com",
+        "mailinator.com",
+        "10minutemail.com",
+        "throwaway.email",
+        "yopmail.com",
+        "temp-mail.org",
+        "fakeinbox.com",
+        "trashmail.com",
+        "maildrop.cc",
+        "getairmail.com",
+        "tempmail.net",
     ];
-    
+
     DISPOSABLE_DOMAINS.contains(&domain)
 }
 
@@ -95,7 +116,7 @@ pub fn sanitize_user_agent(user_agent: Option<String>) -> Option<String> {
             .filter(|c| c.is_ascii() && !c.is_control())
             .take(500) // Limit length
             .collect::<String>();
-        
+
         if sanitized.is_empty() {
             None
         } else {
@@ -114,7 +135,7 @@ pub fn sanitize_location(location: Option<String>) -> Option<String> {
             .collect::<String>()
             .trim()
             .to_string();
-        
+
         if sanitized.is_empty() {
             None
         } else {
@@ -153,7 +174,11 @@ pub fn anonymize_ip_address(ip: Option<String>) -> Option<String> {
 pub fn hash_sensitive_data(data: &str) -> String {
     let mut hasher = Sha256::new();
     hasher.update(data.as_bytes());
-    format!("{:x}", hasher.finalize())
+    hasher
+        .finalize()
+        .iter()
+        .map(|b| format!("{:02x}", b))
+        .collect()
 }
 
 /// Validate and sanitize generic text input
@@ -177,7 +202,6 @@ pub fn html_escape(input: &str) -> String {
         .replace('\'', "&#39;")
         .replace('/', "&#x2F;")
 }
-
 
 #[cfg(test)]
 mod tests {

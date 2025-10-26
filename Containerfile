@@ -11,8 +11,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/* \
     && curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 
-# Install cargo-leptos, sqlx-cli, compatible wasm-bindgen-cli, and WebAssembly target
-RUN cargo binstall cargo-leptos sqlx-cli --no-confirm --log-level warn \
+# Install cargo-leptos, compatible wasm-bindgen-cli, and WebAssembly target
+# RUN cargo binstall cargo-leptos sqlx-cli --no-confirm --log-level warn \
+RUN cargo binstall cargo-leptos --no-confirm --log-level warn \
     && cargo install wasm-bindgen-cli --version 0.2.100 \
     && rustup target add wasm32-unknown-unknown
 
@@ -37,8 +38,8 @@ RUN rm -rf src
 COPY src/ ./src/
 COPY public/ ./public/
 COPY contents/ ./contents/
-COPY migrations/ ./migrations/
-COPY .sqlx/ ./.sqlx/
+# COPY migrations/ ./migrations/
+# COPY .sqlx/ ./.sqlx/
 
 # Copy build script if it exists
 COPY build.rs ./
@@ -66,16 +67,14 @@ WORKDIR /app
 COPY --from=builder /app/target/release/blog ./blog
 COPY --from=builder /app/target/site ./site
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/migrations ./migrations
+# COPY --from=builder /app/migrations ./migrations
 
 # Copy sqlx-cli for running migrations
-COPY --from=builder /usr/local/cargo/bin/sqlx ./sqlx
+# COPY --from=builder /usr/local/cargo/bin/sqlx ./sqlx
 
-# Create startup script for running migrations and starting the app
+# Create startup script for starting the app (no database migrations)
 RUN echo '#!/bin/bash\n\
 set -e\n\
-echo "Running database migrations..."\n\
-./sqlx migrate run --database-url "$DATABASE_URL"\n\
 echo "Starting application..."\n\
 exec "$@"' > /app/start.sh \
     && chmod +x /app/start.sh
@@ -94,6 +93,6 @@ ENV LEPTOS_SITE_PKG_DIR=pkg
 ENV LEPTOS_SITE_ADDR=0.0.0.0:3000
 ENV RUST_LOG=info
 
-# Use startup script as entrypoint to run migrations before starting the app
+# Use startup script as entrypoint to start the app
 ENTRYPOINT ["/app/start.sh"]
 CMD ["./blog"]

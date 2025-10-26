@@ -8,11 +8,11 @@ I came across [khuedoan.com](https://www.khuedoan.com/) while scheming through L
 - Simple architecture fits right to the needs of a personal blog.
 - His implementation also helps to speed up understanding of the application life cycle (from development to deployment).
 
-However, contradictorily, such simplicity did make me scratch my head and think twice, "I want to learn full-stack, not just creating content!". It was time to search for another solution.
+However, contradictory, such simplicity did make me scratch my head and think twice, "I want to learn full-stack, not just creating content!". It was time to search for another solution.
 
 ## Searching for a definitive solution
 
-I then stumbled on this book: [FullStack Rust with Axum from Martin Fabio](https://www.amazon.com/FullStack-Rust-Axum-Server-Rendered-High-Performance-ebook/dp/B0FM6XF8YX). I did not follow closely what he wrote in the book. The reason was that Martin introduced HTMX into his stack, while I have decided that Leptos is my true soul mate. Still, his gold-standard guidance, especially in architecture and industry best practices, is something I cannot help but praise. I jumped around between chapters, gluing up parts with his demonstration to complete what you are currently looking at.
+I then stumbled on this book: [Full-stack Rust with Axum from Martin Fabio](https://www.amazon.com/FullStack-Rust-Axum-Server-Rendered-High-Performance-ebook/dp/B0FM6XF8YX). I did not follow closely what he wrote in the book. The reason was that Martin introduced HTMX into his stack, while I have decided that Leptos is my true soulmate Still, his gold-standard guidance, especially in architecture and industry best practices, is something I cannot help but praise. I jumped around between chapters, gluing up parts with his demonstration to complete what you are currently looking at.
 
 ## Teachers of tomorrow
 
@@ -22,7 +22,7 @@ The reasons are:
 
 - Rust and Leptos are the future, promising but not yet mature.
 - Many Rust crates are not even in their stable versions yet, so breaking changes will always be a part of the game.
-- Dependencies do not always guarantee backward compatablity (especially in beta version under fast pace developement)
+- Dependencies do not always guarantee backward compatibility (especially in beta version under fast pace development)
 - The Leptos framework is rising, yet can hardly be found in production.
 
 Your best guess?

@@ -1,3 +1,4 @@
+use rand::rngs::ThreadRng;
 use axum::{
     body::Body,
     http::{Request, StatusCode},
@@ -6,14 +7,14 @@ use axum::{
 };
 use axum_extra::extract::cookie::CookieJar;
 use base64::{Engine as _, engine::general_purpose};
-use rand::RngCore;
+use rand::Rng;
 
 const CSRF_HEADER: &str = "x-csrf-token";
 const CSRF_COOKIE: &str = "csrf_token";
 
 // Generate a secure random CSRF token
 pub fn generate_csrf_token() -> String {
-    let mut rng = rand::rng();
+    let mut rng = ThreadRng::default();
     let mut bytes = [0u8; 32];
     rng.fill_bytes(&mut bytes);
     general_purpose::STANDARD.encode(bytes)

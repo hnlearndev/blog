@@ -1,7 +1,8 @@
 //! Minimal newsletter subscription form component
 
-#[cfg(feature = "hydrate")]
-use crate::shared::dto::SubscribeResponse;
+// TODO: Uncomment when re-enabling subscriber functionality
+// #[cfg(feature = "hydrate")]
+// use crate::shared::dto::SubscribeResponse;
 
 use garde::Validate;
 use leptos::prelude::*;
@@ -54,6 +55,12 @@ async fn submit_subscription(data: SubscriberData) -> Result<String, String> {
     data.validate()
         .map_err(|e| format!("Validation error: {}", e))?;
 
+    // TODO: Remove this temporary message when re-enabling subscription functionality
+    // For now, return a disabled message instead of making API calls
+    Ok("Thank you for your interest! Newsletter subscription is temporarily disabled while we work on improvements.".to_string())
+
+    // TODO: Uncomment the code below when re-enabling subscription functionality
+    /*
     #[cfg(feature = "hydrate")]
     {
         use gloo_net::http::Request;
@@ -87,6 +94,7 @@ async fn submit_subscription(data: SubscriberData) -> Result<String, String> {
         // Server-side fallback
         Ok("Successfully subscribed! Check your email for confirmation.".to_string())
     }
+    */
 }
 
 /// Minimal subscription form component
@@ -146,24 +154,30 @@ pub fn SubscribeForm() -> impl IntoView {
                 >
                     {move || match form_state.get() {
                         FormState::Loading => "Subscribing...",
-                        _ => "Subscribe"
+                        _ => "Subscribe",
                     }}
                 </button>
             </div>
 
             {move || match form_state.get() {
-                FormState::Success(msg) => view! {
-                    <div class="success">
-                        <p>{msg}</p>
-                        <button on:click=reset_form>"Subscribe another"</button>
-                    </div>
-                }.into_any(),
-                FormState::Error(msg) => view! {
-                    <div class="error">
-                        <p>{msg}</p>
-                        <button on:click=reset_form>"Try again"</button>
-                    </div>
-                }.into_any(),
+                FormState::Success(msg) => {
+                    view! {
+                        <div class="success">
+                            <p>{msg}</p>
+                            <button on:click=reset_form>"Subscribe another"</button>
+                        </div>
+                    }
+                        .into_any()
+                }
+                FormState::Error(msg) => {
+                    view! {
+                        <div class="error">
+                            <p>{msg}</p>
+                            <button on:click=reset_form>"Try again"</button>
+                        </div>
+                    }
+                        .into_any()
+                }
                 FormState::Idle | FormState::Loading => view! { <div></div> }.into_any(),
             }}
         </div>

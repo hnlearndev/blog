@@ -1,6 +1,6 @@
-# Trung thu thi ca
+# TRUNG THU THI CA
 
-*Cuội trong bài thơ không nhất thiết ám chỉ một cá nhân. Bất kỳ sự trùng hợp nào cũng chỉ là ngẫu nhiên. Lấy âm hưởng từ dân gian Việt Nam trào phúng lồng ghép cảm hứng từ các bộ phim cung chiến xứ Tàu, tác giả hy vọng có thể mang lại niềm vui chốn văn phòng cho người đọc.*
+_Cuội trong bài thơ không nhất thiết ám chỉ một cá nhân. Bất kỳ sự trùng hợp nào cũng chỉ là ngẫu nhiên. Lấy âm hưởng từ dân gian Việt Nam trào phúng lồng ghép cảm hứng từ các bộ phim cung chiến xứ Tàu, tác giả hy vọng có thể mang lại niềm vui chốn văn phòng cho người đọc._
 
 <div align="center">
 
@@ -191,3 +191,5 @@ Thói đời thay đổi bớt tròng bẫy nhau
 Nhiều bài học, lắm khổ đau
 
 Kết thơ hết truyện, hồi sau có còn?
+
+-- Hứa Ngạng Thi Nhân --

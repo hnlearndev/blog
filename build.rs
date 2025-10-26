@@ -1,11 +1,11 @@
 use chrono::NaiveDate;
-use pulldown_cmark::{CodeBlockKind, CowStr, Event, Options, Parser, Tag, TagEnd, html};
+use pulldown_cmark::{html, CodeBlockKind, CowStr, Event, Options, Parser, Tag, TagEnd};
 use std::{env, fs, path::Path};
 use syntect::{
     easy::HighlightLines,
     highlighting::ThemeSet,
     html::{
-        IncludeBackground, append_highlighted_html_for_styled_line, start_highlighted_html_snippet,
+        append_highlighted_html_for_styled_line, start_highlighted_html_snippet, IncludeBackground,
     },
     parsing::SyntaxSet,
     util::LinesWithEndings,
@@ -32,6 +32,7 @@ fn main() {
 // ===========================
 // BUILD HELPERS
 // ===========================
+
 fn write_out_list(varname: &str, posts: Vec<(u32, NaiveDate, String, String)>, dest_path: &Path) {
     let entries: Vec<String> = posts
         .iter()
