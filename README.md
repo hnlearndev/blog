@@ -1,8 +1,8 @@
 <h1 align="center">
 
 <picture>
-  <source srcset="https://raw.githubusercontent.com/hnlearndev/static/refs/heads/main/blog/banner-dark.svg" media="(prefers-color-scheme: dark)">
-  <img src="https://raw.githubusercontent.com/hnlearndev/static/refs/heads/main/blog/banner-light.svg" alt="Willian Nguyen's blog">
+  <source srcset="https://raw.githubusercontent.com/hnlearndev/static/refs/heads/main/blog/banner_dark.svg" media="(prefers-color-scheme: dark)">
+  <img src="https://raw.githubusercontent.com/hnlearndev/static/refs/heads/main/blog/banner_light.svg" alt="Willian Nguyen's blog">
 </picture>
 
 </h1>

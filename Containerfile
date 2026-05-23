@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 # Install cargo-leptos, compatible wasm-bindgen-cli, and WebAssembly target
 # RUN cargo binstall cargo-leptos sqlx-cli --no-confirm --log-level warn \
 RUN cargo binstall cargo-leptos --no-confirm --log-level warn \
-    && cargo install wasm-bindgen-cli --version 0.2.100 \
+    && cargo install wasm-bindgen-cli --version 0.2.122 \
     && rustup target add wasm32-unknown-unknown
 
 # Set working directory
