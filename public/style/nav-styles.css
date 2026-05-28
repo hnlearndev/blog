@@ -1,4 +1,30 @@
+/* Header wrapper - matches footer-enhanced for consistent edge alignment */
+.nav-header {
+  width: 100%;
+  background: var(--pico-background-color, #fff);
+}
+
 /* Enhanced Navigation Styles */
+
+/* Reset PicoCSS button styles for theme toggle */
+.nav-theme button,
+.mobile-nav-theme button {
+  background: none !important;
+  border: none !important;
+  padding: 0.5rem !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: currentColor !important;
+}
+
 .nav-enhanced {
   display: flex;
   justify-content: space-between;
@@ -13,6 +39,8 @@
 }
 
 .brand-link {
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   color: inherit;
 }
@@ -26,6 +54,9 @@
   display: flex;
   align-items: center;
   gap: 2rem;
+  margin: 0;
+  margin-left: auto;
+  padding: 0;
 }
 
 .nav-links {
@@ -74,8 +105,6 @@
   align-items: center;
   margin: 0;
   padding: 0 0.75rem;
-  border-left: 1px solid var(--pico-muted-border-color);
-  border-right: 1px solid var(--pico-muted-border-color);
 }
 
 .theme-toggle {
@@ -99,23 +128,6 @@
   background-color: var(--pico-muted-color);
   transform: translateY(-2px);
 }
-
-/* Completely remove all focus outlines for theme toggle */
-.theme-toggle:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.theme-toggle:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.theme-toggle:active {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
 
 /* Mobile theme toggle - match desktop styling */
 .mobile-nav-theme .theme-toggle {
@@ -149,8 +161,7 @@
   display: flex;
   gap: 0.75rem;
   align-items: center;
-  margin-left: 0;
-  padding-left: 0.25rem !important;
+  margin: 0;
 }
 
 .social-link {
@@ -173,12 +184,11 @@
   text-decoration: none;
 }
 
-.social-icon,
-.theme-toggle__icon {
+.social-icon {
   flex-shrink: 0;
 }
 
-/* Mobile Menu Button */
+/* Mobile Menu Button - hidden on desktop, shown via media query */
 .mobile-menu-button {
   display: none;
   background: none;
@@ -188,59 +198,57 @@
   color: inherit;
   border-radius: 0.375rem;
   transition: background-color 0.2s ease;
+  align-items: center;
+  justify-content: center;
 }
 
 .mobile-menu-button:hover {
   background-color: var(--pico-muted-color);
 }
 
-/* Mobile Menu */
-.mobile-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: var(--pico-background-color);
-  border: 1px solid var(--pico-muted-border-color);
-  border-radius: 0.5rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  z-index: 50;
-  margin-top: 0.5rem;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.2s ease;
-  pointer-events: none;
+/* Mobile Menu Button - hidden on desktop, shown via media query */
+.mobile-dropdown-content {
+  width: calc(100vw - 4rem) !important;
+  left: 2rem !important;
+  right: 2rem !important;
+  max-width: 320px !important;
+  background: var(
+    --pico-card-background-color,
+    color-mix(in srgb, var(--pico-background-color) 90%, currentColor)
+  ) !important;
+  border: 1px solid var(--pico-muted-border-color) !important;
+  border-radius: 0.5rem !important;
+  padding: 1rem !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
-.mobile-menu-open {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: all;
-}
-
-.mobile-menu-content {
-  padding: 1rem;
-}
-
-.mobile-nav-links {
+/* Ensure DropdownMenuGroup stacks children vertically */
+.mobile-dropdown-content [data-name="DropdownMenuGroup"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
   gap: 0.25rem;
 }
 
-.mobile-nav-item {
-  margin: 0;
+/* Separator visibility inside mobile dropdown */
+.mobile-dropdown-content [role="separator"] {
   width: 100%;
+  height: 2px;
+  background-color: var(--pico-muted-border-color);
+  margin: 0.5rem 0;
+  align-self: stretch;
 }
 
-.mobile-nav-link {
+.mobile-dropdown-content [data-name="DropdownMenuAction"] {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
   text-decoration: none;
@@ -248,28 +256,22 @@
   border-radius: 0.375rem;
   transition: background-color 0.2s ease;
   font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
 }
 
-.mobile-nav-link:hover {
+.mobile-dropdown-content [data-name="DropdownMenuAction"]:hover {
   background-color: var(--pico-muted-color);
-  text-decoration: none;
 }
+
+/* Mobile social and nav icon styles */
 
 .mobile-nav-icon,
-.mobile-social-icon,
-.theme-toggle__icon {
+.mobile-social-icon {
   flex-shrink: 0;
   opacity: 0.8;
-}
-
-.mobile-nav-link:hover .mobile-nav-icon {
-  opacity: 1;
-}
-
-.theme-toggle:hover .theme-toggle__icon {
-  opacity: 1;
-  transform: scale(1.1);
-  animation: iconBounce 0.6s ease;
 }
 
 /* Mobile Theme Toggle */
@@ -277,7 +279,6 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   padding: 1rem 0;
-  border-top: 1px solid var(--pico-muted-border-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -286,7 +287,6 @@
 /* Mobile Social Media */
 .mobile-nav-social {
   padding-top: 1rem;
-  border-top: 1px solid var(--pico-muted-border-color);
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -313,14 +313,14 @@
   text-decoration: none;
 }
 
-.mobile-social-icon {
-  flex-shrink: 0;
-}
-
 .mobile-social-link:hover .mobile-social-icon {
   opacity: 1;
 }
 
+/* Mobile wrapper - hidden on desktop by default */
+.nav-mobile {
+  display: none;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -328,52 +328,21 @@
     display: none;
   }
 
+  .nav-mobile {
+    display: flex;
+  }
+
   .mobile-menu-button {
     display: flex;
-    align-items: center;
-    justify-content: center;
   }
-
-  .nav-theme {
-    display: none;
-  }
-}
-
-/* Active link styles */
-.nav-link[aria-current="page"],
-.mobile-nav-link[aria-current="page"] {
-  background-color: var(--pico-primary-background);
-  color: var(--pico-primary-inverse);
-}
-
-.nav-link[aria-current="page"]:hover,
-.mobile-nav-link[aria-current="page"]:hover {
-  background-color: var(--pico-primary-hover);
-}
-
-/* Icon animations */
-@keyframes iconBounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-3px);
-  }
-  60% {
-    transform: translateY(-1px);
-  }
-}
-
-.nav-link:hover .nav-icon,
-.mobile-nav-link:hover .mobile-nav-icon {
-  animation: iconBounce 0.6s ease;
 }
 
 /* Reset state after click - completely removes all effects */
 .nav-link.clicked,
-.mobile-nav-link.clicked,
 .social-link.clicked,
-.mobile-social-link.clicked {
+.mobile-social-link.clicked,
+a.social-link.clicked,
+a.mobile-social-link.clicked {
   transform: none !important;
   background-color: transparent !important;
   background: transparent !important;
@@ -381,61 +350,33 @@
   opacity: 0.3 !important;
   box-shadow: none !important;
   outline: none !important;
-}
-
-.nav-link.clicked:hover,
-.mobile-nav-link.clicked:hover,
-.social-link.clicked:hover,
-.mobile-social-link.clicked:hover {
-  transform: none !important;
-  background-color: transparent !important;
-  background: transparent !important;
-  opacity: 0.5 !important;
-  box-shadow: none !important;
-}
-
-/* Specifically target the problematic social-link styles */
-a.social-link.clicked,
-a.mobile-social-link.clicked {
-  background-color: transparent !important;
-  background: transparent !important;
-  transform: none !important;
-  opacity: 0.5 !important;
-  box-shadow: none !important;
   border: none !important;
 }
 
+.nav-link.clicked:hover,
+.social-link.clicked:hover,
+.mobile-social-link.clicked:hover,
 a.social-link.clicked:hover,
 a.mobile-social-link.clicked:hover,
 a.social-link.clicked:focus,
 a.mobile-social-link.clicked:focus,
 a.social-link.clicked:active,
 a.mobile-social-link.clicked:active {
+  transform: none !important;
   background-color: transparent !important;
   background: transparent !important;
-  transform: none !important;
   opacity: 0.5 !important;
   box-shadow: none !important;
   border: none !important;
 }
 
 .nav-link.clicked .nav-icon,
-.mobile-nav-link.clicked .mobile-nav-icon,
 .social-link.clicked .social-icon,
 .mobile-social-link.clicked .mobile-social-icon {
   opacity: 0.5 !important;
   transform: none !important;
   animation: none !important;
   transition: none !important;
-}
-
-.nav-link.clicked:hover .nav-icon,
-.mobile-nav-link.clicked:hover .mobile-nav-icon,
-.social-link.clicked:hover .social-icon,
-.mobile-social-link.clicked:hover .mobile-social-icon {
-  opacity: 0.5 !important;
-  transform: none !important;
-  animation: none !important;
 }
 
 /* Smooth reset animation */
@@ -451,110 +392,26 @@ a.mobile-social-link.clicked:active {
 }
 
 .nav-link.reset-animation,
-.mobile-nav-link.reset-animation,
 .social-link.reset-animation,
-.mobile-social-link.reset-animation {
+.mobile-social-link.reset-animation,
+a.social-link.reset-animation,
+a.mobile-social-link.reset-animation {
   animation: resetClick 0.3s ease-out forwards;
   background-color: transparent !important;
   background: transparent !important;
   transform: none !important;
   box-shadow: none !important;
+  border: none !important;
 }
 
 .nav-link.reset-animation .nav-icon,
-.mobile-nav-link.reset-animation .mobile-nav-icon,
 .social-link.reset-animation .social-icon,
 .mobile-social-link.reset-animation .mobile-social-icon {
   animation: resetClick 0.3s ease-out forwards;
-}
-
-/* Strong override for any remaining effects */
-a.social-link.reset-animation,
-a.mobile-social-link.reset-animation {
-  background-color: transparent !important;
-  background: transparent !important;
-  transform: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  animation: resetClick 0.3s ease-out forwards;
-}
-
-a.social-link.reset-animation:hover,
-a.mobile-social-link.reset-animation:hover,
-a.social-link.reset-animation:focus,
-a.mobile-social-link.reset-animation:focus,
-a.social-link.reset-animation:active,
-a.mobile-social-link.reset-animation:active {
-  background-color: transparent !important;
-  background: transparent !important;
-  transform: none !important;
-  box-shadow: none !important;
-  border: none !important;
 }
 
 /* Accessibility improvements */
 .mobile-menu-button:focus {
   outline: 2px solid var(--pico-primary);
   outline-offset: 2px;
-}
-
-.nav-link:focus,
-.mobile-nav-link:focus,
-/* Completely remove all focus outlines for social links */
-.social-link:focus,
-.mobile-social-link:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.social-link:focus-visible,
-.mobile-social-link:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.social-link:active,
-.mobile-social-link:active {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Dark mode adjustments */
-@media (prefers-color-scheme: dark) {
-  .mobile-menu {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  }
-}
-
-/* Final override to ensure clicked state completely removes all effects */
-.social-link.clicked,
-.mobile-social-link.clicked,
-.social-link.reset-animation,
-.mobile-social-link.reset-animation {
-  background-color: transparent !important;
-  background: none !important;
-  transform: translateY(0px) !important;
-  box-shadow: none !important;
-  border: none !important;
-  outline: none !important;
-}
-
-.social-link.clicked:hover,
-.mobile-social-link.clicked:hover,
-.social-link.clicked:focus,
-.mobile-social-link.clicked:focus,
-.social-link.clicked:active,
-.mobile-social-link.clicked:active,
-.social-link.reset-animation:hover,
-.mobile-social-link.reset-animation:hover,
-.social-link.reset-animation:focus,
-.mobile-social-link.reset-animation:focus,
-.social-link.reset-animation:active,
-.mobile-social-link.reset-animation:active {
-  background-color: transparent !important;
-  background: none !important;
-  transform: translateY(0px) !important;
-  box-shadow: none !important;
-  border: none !important;
-  outline: none !important;
 }

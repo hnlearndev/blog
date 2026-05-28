@@ -1,0 +1,4 @@
+{
+  "components_dir": "src/app/components/ui",
+  "cargo_toml": "Cargo.toml"
+}

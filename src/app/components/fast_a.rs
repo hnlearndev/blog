@@ -1,7 +1,9 @@
-use leptos::*;
-use leptos::{ev::MouseEvent, prelude::*};
-use leptos_router::{components::ToHref, hooks::use_navigate};
+use leptos::prelude::*;
+use leptos_router::components::ToHref;
 
+/// A progressively enhanced anchor component.
+/// Relies on Leptos 0.8 router's global click handler for client-side navigation —
+/// no custom event handler needed.
 #[component]
 pub fn FastA<H>(
     href: H,
@@ -12,29 +14,10 @@ pub fn FastA<H>(
 where
     H: ToHref + Send + Sync + 'static,
 {
-    let navigate = use_navigate();
     let path = href.to_href()();
 
-    fn is_left_click(event: &MouseEvent) -> bool {
-        event.button() == 0
-            && !event.meta_key()
-            && !event.ctrl_key()
-            && !event.shift_key()
-            && !event.alt_key()
-    }
-
     view! {
-        <a
-            href=path.clone()
-            target=target
-            class=class.map(Oco::from)
-            on:mousedown=move |event| {
-                if is_left_click(&event) {
-                    event.prevent_default();
-                    navigate(&path, Default::default());
-                }
-            }
-        >
+        <a href=path target=target class=class.map(Oco::from)>
             {children()}
         </a>
     }

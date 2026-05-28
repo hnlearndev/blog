@@ -22,14 +22,15 @@ fn generate_csp_nonce() -> String {
 
 pub async fn security_headers(req: Request<Body>, next: Next) -> Response {
     let mut res = next.run(req).await;
-    
+
     // Generate nonce for this response
     let nonce = generate_csp_nonce();
-    
+
     // Check if we're in production mode
     let is_production = env::var("LEPTOS_ENV")
         .unwrap_or_else(|_| "DEV".to_string())
-        .to_uppercase() == "PROD";
+        .to_uppercase()
+        == "PROD";
 
     // Build CSP policy based on environment
     let csp_policy = if is_production {
@@ -53,7 +54,8 @@ pub async fn security_headers(req: Request<Body>, next: Next) -> Response {
              style-src 'self' 'unsafe-inline'; \
              img-src 'self' data: https:; \
              font-src 'self' data:; \
-             connect-src 'self' ws: wss:;".to_string()
+             connect-src 'self' ws: wss:;"
+            .to_string()
     };
 
     // Security headers
@@ -63,7 +65,10 @@ pub async fn security_headers(req: Request<Body>, next: Next) -> Response {
         ("x-frame-options", "DENY"),
         ("x-xss-protection", "1; mode=block"),
         ("referrer-policy", "strict-origin-when-cross-origin"),
-        ("permissions-policy", "camera=(), microphone=(), geolocation=(), interest-cohort=()"),
+        (
+            "permissions-policy",
+            "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        ),
         ("x-permitted-cross-domain-policies", "none"),
     ];
 
@@ -77,13 +82,11 @@ pub async fn security_headers(req: Request<Body>, next: Next) -> Response {
 
     for (name, value) in headers.iter() {
         if let Ok(header_value) = HeaderValue::from_str(value) {
-            res.headers_mut().insert(
-                HeaderName::from_static(name),
-                header_value,
-            );
+            res.headers_mut()
+                .insert(HeaderName::from_static(name), header_value);
         }
     }
-    
+
     // Store nonce in response extensions for use in templates
     res.extensions_mut().insert(nonce);
 

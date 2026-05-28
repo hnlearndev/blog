@@ -22,10 +22,11 @@ _There is a regular status service to check that the website should work. This i
 This application follows a **full-stack Rust architecture** using:
 
 - **Frontend**: Leptos with hydration for interactive client-side features
-- **Backend**: Axum web framework with PostgreSQL database
+- **Backend**: Axum web framework
 - **Rendering**: Server-side rendering (SSR) with client-side hydration
 - **Content**: Markdown-based blog posts with syntax highlighting
 - **Build System**: Custom build script for static content generation
+- **Planned Database**: SurrealDB
 
 ## TECH STACK
 
@@ -35,11 +36,9 @@ This application follows a **full-stack Rust architecture** using:
 - **[Axum 0.8](https://docs.rs/axum/)** - Modern async web framework
 - **[Tokio](https://tokio.rs/)** - Async runtime
 
-### Database & ORM
+### Database (Planned)
 
-- **[PostgreSQL](https://www.postgresql.org/)** - Primary database
-- **[SQLx 0.8](https://docs.rs/sqlx/)** - Async SQL toolkit with compile-time checked queries
-- **Database Migrations** - Version-controlled schema management
+- **[SurrealDB](https://surrealdb.com/)** - Multi-model database (planned for newsletter subscriber feature)
 
 ### Content Processing
 
@@ -58,19 +57,57 @@ This application follows a **full-stack Rust architecture** using:
 
 ### 🌐 Frontend (Leptos)
 
-The implementation is obtained from cargo-leptos Axum template. For more detail, please follow the [instruction](https://github.com/leptos-rs/start-axum).
+Built with Leptos 0.8 using SSR + hydration pattern. The frontend follows a responsive component architecture with clear separation of desktop/mobile layouts.
 
-```text
-src/
-├── app.rs                 # App component and routing
-├── client.rs              # Client-side hydration entry
-├── app/
-│   ├── helpers.rs         # UI utility functions
-│   ├── components.rs      # Component module definitions
-│   ├── components/
-│   ├── pages.rs
-│   └── pages/             # Page module definitions
 ```
+src/
+├── client.rs              # Client-side hydration entry point
+├── lib.rs                 # Shared library code
+├── app/
+│   ├── mod.rs             # Root App component with header/footer
+│   ├── helpers.rs         # UI utility functions
+│   ├── components/        # Reusable UI components
+│   │   ├── nav/           # Navigation (responsive desktop/mobile)
+│   │   │   ├── mod.rs     # Nav coordinator
+│   │   │   ├── desktop.rs # Desktop navigation (>768px)
+│   │   │   ├── mobile.rs  # Mobile navigation (≤768px)
+│   │   │   └── helpers.rs # Shared nav logic & parameterized components
+│   │   ├── footer/        # Footer (responsive desktop/mobile)
+│   │   │   ├── mod.rs     # Footer coordinator
+│   │   │   ├── desktop.rs # Desktop footer layout
+│   │   │   ├── mobile.rs  # Mobile footer layout
+│   │   │   ├── helpers.rs # Copyright & NewsletterSection components
+│   │   │   └── subscribe_form.rs  # AutoForm-based newsletter form
+│   │   ├── post_nav/      # Post navigation (prev/next links)
+│   │   │   ├── mod.rs     # PostNav coordinator
+│   │   │   ├── desktop.rs # Horizontal layout
+│   │   │   ├── mobile.rs  # Vertical stacked layout
+│   │   │   └── helpers.rs # BackToTop & PostLink components
+│   │   ├── ui/            # rust-ui components (theme toggle, etc.)
+│   │   ├── fast_a.rs      # Enhanced anchor component
+│   │   ├── content_list.rs   # Dynamic post/poem list rendering
+│   │   ├── icons.rs       # Icon mapping utilities
+│   │   └── theme_toggle.rs   # Dark/light mode switcher
+│   ├── pages/             # Route-level page components
+│   │   ├── mod.rs         # Page coordinator
+│   │   ├── homepage.rs    # Landing page
+│   │   ├── postpage.rs    # Blog post list & detail pages
+│   │   └── poempage.rs    # Poetry list & detail pages
+│   └── hooks/             # Custom reactive hooks
+│       └── use_theme_mode.rs  # Theme state management with localStorage
+├── server/                # Backend (see Backend section)
+└── shared/                # Shared DTOs between frontend/backend
+    └── dto.rs
+```
+
+#### Frontend Architecture Patterns
+
+- **Responsive Module Pattern**: Each complex component (`nav/`, `footer/`, `post_nav/`) uses a directory structure with `mod.rs` (coordinator), `desktop.rs`, `mobile.rs`, and `helpers.rs` (shared logic)
+- **Parameterized Components**: Shared UI elements (e.g., `SocialLinks`, `NavLinks`) accept class prefixes for layout variants without duplication
+- **Theme Management**: Reactive theme state persisted to localStorage, with SSR-compatible hydration
+- **Static Content**: Markdown posts/poems processed at build time, rendered as static HTML with syntax highlighting
+- **rust-ui Integration**: Uses rust-ui ecosystem for form generation (`autoform`), icons (`icons` crate with Leptos feature), and UI primitives
+- **CSS Strategy**: PicoCSS base + Tailwind CSS v4 + custom semantic stylesheets in `public/style/`
 
 ### ⚙️ Backend (Axum) Architecture
 
@@ -78,7 +115,7 @@ The backend structure seen below is over-engineered for the purpose of personal 
 
 However, the industry-graded architecture is purposely used to study fullstack technology with Rust. The architecture is learnt from the book [FullStack Rust with Axum from Martin Fabio](https://www.amazon.com/FullStack-Rust-Axum-Server-Rendered-High-Performance-ebook/dp/B0FM6XF8YX)
 
-```text
+```
 ├── main.rs                 # Application entry point
 ├── server.rs               # Server orchestration & middleware stack
 └── server/                 # Modular backend architecture
@@ -122,7 +159,7 @@ However, the industry-graded architecture is purposely used to study fullstack t
 
 ### 🏘️ Backend Layer Relationships
 
-```mermaid
+```
 graph TD
   Middleware["🧩 Middleware Stack<br/>(server.rs & routes/)"]
   Middleware -->|Applied globally and per route| Routes["🛣️ Routes"]

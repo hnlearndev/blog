@@ -1,0 +1,87 @@
+/* Desktop post nav: horizontal layout, visible above 768px */
+.post-nav-desktop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+/* Mobile post nav: hidden above 768px */
+.post-nav-mobile {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+}
+
+.post-nav-mobile-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .post-nav-desktop {
+    display: none;
+  }
+
+  .post-nav-mobile {
+    display: flex;
+  }
+}
+
+.post-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.post-nav-link:hover {
+  opacity: 1;
+}
+
+.post-nav-next {
+  justify-content: flex-end;
+}
+
+/* Back to top button */
+.post-nav-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--pico-muted-border-color);
+  text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+  transition:
+    opacity 0.2s,
+    background-color 0.2s;
+  opacity: 0.8;
+}
+
+/* Light mode: darker background for contrast */
+:root:not([data-theme="dark"]) .post-nav-top {
+  background-color: #d1d5db;
+}
+
+/* Dark mode: lighter background for contrast */
+[data-theme="dark"] .post-nav-top {
+  background-color: #374151;
+}
+
+.post-nav-top:hover {
+  opacity: 1;
+}

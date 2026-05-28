@@ -10,9 +10,12 @@ use leptos_router::hooks::use_params_map;
 pub fn PoemListPage() -> impl IntoView {
     view! {
         <Title text="Willian's poem posts" />
-        <p> I am not purely technical. I do poetry here and there just to kill time. </p>
-        <p> My poems are in Vietnamese, my mother-tounge. Most of them are just witty and sarcastic. They can be emotional sometimes. </p>
-        <h1>"Poem Posts"</h1>
+        <p>I am not purely technical. I do poetry here and there just to kill time.</p>
+        <p>
+            My poems are in Vietnamese, my mother-tounge. Most of them are just witty and sarcastic. They can be emotional sometimes.
+        </p>
+        <br />
+        <h3>"Poem posts"</h3>
         <PoemList />
     }
 }
@@ -26,5 +29,5 @@ pub fn PoemList() -> impl IntoView {
 #[component]
 pub fn SinglePoemPage() -> impl IntoView {
     let params = use_params_map();
-    render_content_page(POEMS, &params)
+    render_content_page(POEMS, &params, "Poems", "/poems")
 }

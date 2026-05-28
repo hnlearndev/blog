@@ -1,12 +1,12 @@
-use garde::Validate;
 use regex::Regex;
 use sha2::{Digest, Sha256};
 use std::net::IpAddr;
+use validator::Validate;
 
 /// Email validation with additional security checks
-#[derive(Debug, garde::Validate)]
+#[derive(Debug, Validate)]
 pub struct EmailValidator {
-    #[garde(email, length(min = 5, max = 254))]
+    #[validate(email, length(min = 5, max = 254))]
     pub email: String,
 }
 
@@ -15,7 +15,7 @@ impl EmailValidator {
         // Convert to lowercase for consistency
         let email = email.trim().to_lowercase();
 
-        // Check for basic email format using garde
+        // Check for basic email format using validator
         let validator = EmailValidator {
             email: email.clone(),
         };

@@ -10,7 +10,10 @@ use leptos_router::hooks::use_params_map;
 pub fn PostListPage() -> impl IntoView {
     view! {
         <Title text="Willian's blog posts" />
-        <h1>"Blog Posts"</h1>
+        <p>Sharing my thoughts, experiences and anything I find interesting</p>
+        <p>I do not limit myself to any specific topics.</p>
+        <br />
+        <h3>"Blog posts"</h3>
         <PostList />
     }
 }
@@ -24,5 +27,5 @@ pub fn PostList() -> impl IntoView {
 #[component]
 pub fn SinglePostPage() -> impl IntoView {
     let params = use_params_map();
-    render_content_page(POSTS, &params)
+    render_content_page(POSTS, &params, "Posts", "/posts")
 }

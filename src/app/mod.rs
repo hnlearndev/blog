@@ -1,12 +1,13 @@
 // Import sub-modules
 pub mod components;
 pub mod helpers;
+pub mod hooks;
 pub mod pages;
 
 // Import necessary crates and modules
 use components::{Footer, Nav};
 use leptos::prelude::*;
-use leptos_meta::{MetaTags, Stylesheet, Title, provide_meta_context};
+use leptos_meta::{MetaTags, Title, provide_meta_context};
 use leptos_router::{
     StaticSegment,
     components::{Route, Router, Routes},
@@ -26,6 +27,14 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
                 <meta name="description" content="Willian's personal website" />
                 <meta name="color-scheme" content="light dark" />
                 <link rel="icon" href="/favico.svg" />
+                // Pico CSS
+                <link rel="stylesheet" href="/style/pico.min.css" />
+                // Component styles
+                <link rel="stylesheet" href="/style/nav-styles.css" />
+                <link rel="stylesheet" href="/style/footer-styles.css" />
+                <link rel="stylesheet" href="/style/post-nav.css" />
+                // Tailwind CSS
+                <link rel="stylesheet" href="/pkg/blog.css" />
                 <AutoReload options=options.clone() />
                 <HydrationScripts options />
                 <MetaTags />
@@ -42,21 +51,22 @@ pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
 
-    view! {
-        <Stylesheet id="leptos" href="/style/pico.min.css" />
-        <Stylesheet id="nav-styles" href="/style/nav-styles.css" />
-        <Stylesheet id="footer-styles" href="/style/footer-styles.css" />
+    // Initialize theme mode context for rust-ui ThemeToggle
+    let _ = hooks::use_theme_mode::ThemeMode::init();
 
+    view! {
         <Title text="Welcome to Willian's blog" />
 
         <Router>
             // Navigation bar
-            <header class="container">
-                <Nav />
+            <header class="nav-header">
+                <div class="container mx-auto px-4">
+                    <Nav />
+                </div>
             </header>
 
             // Main content area with routing
-            <main class="container">
+            <main class="container mx-auto px-4 py-8">
                 <Routes fallback=|| "Page not found.".into_view()>
                     <Route path=StaticSegment("") view=HomePage />
                     // Posts section
@@ -69,9 +79,7 @@ pub fn App() -> impl IntoView {
             </main>
 
             // Footer section
-            <footer class="container">
-                <Footer />
-            </footer>
+            <Footer />
         </Router>
     }
 }

@@ -1,4 +1,3 @@
-use rand::rngs::ThreadRng;
 use axum::{
     body::Body,
     http::{Request, StatusCode},
@@ -8,6 +7,7 @@ use axum::{
 use axum_extra::extract::cookie::CookieJar;
 use base64::{Engine as _, engine::general_purpose};
 use rand::Rng;
+use rand::rngs::ThreadRng;
 
 const CSRF_HEADER: &str = "x-csrf-token";
 const CSRF_COOKIE: &str = "csrf_token";

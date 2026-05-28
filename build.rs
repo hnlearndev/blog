@@ -1,11 +1,11 @@
 use chrono::NaiveDate;
-use pulldown_cmark::{html, CodeBlockKind, CowStr, Event, Options, Parser, Tag, TagEnd};
+use pulldown_cmark::{CodeBlockKind, CowStr, Event, Options, Parser, Tag, TagEnd, html};
 use std::{env, fs, path::Path};
 use syntect::{
     easy::HighlightLines,
     highlighting::ThemeSet,
     html::{
-        append_highlighted_html_for_styled_line, start_highlighted_html_snippet, IncludeBackground,
+        IncludeBackground, append_highlighted_html_for_styled_line, start_highlighted_html_snippet,
     },
     parsing::SyntaxSet,
     util::LinesWithEndings,
@@ -78,7 +78,9 @@ fn list_from_md_files(path: &Path) -> Vec<(u32, NaiveDate, String, String)> {
                 .next()
                 .and_then(|line| line.strip_prefix("# "))?
                 .to_string();
-            let html = markdown_to_html(&markdown);
+            // Skip the first line (title) since it's rendered separately
+            let content_markdown: String = markdown.lines().skip(1).collect::<Vec<_>>().join("\n");
+            let html = markdown_to_html(&content_markdown);
             Some((id, date, title, html))
         })
         .collect();

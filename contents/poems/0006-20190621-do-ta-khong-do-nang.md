@@ -1,6 +1,7 @@
-# ĐỘ TA KHÔNG ĐỘ NÀNG?
+# Độ ta không độ nàng
 
 <div align="center">
+
 Cà sa đã khoác lên người
 
 Một lòng hướng phật vẹn mười pháp tâm
@@ -21,8 +22,6 @@ Lấy mất nàng, để lại ta
 
 Người đi hay ở mới là đau hơn?
 
-</div>
+-- _Hứa Ngạng Thi Nhân_ --
 
--- Hứa Ngạng Thi Nhân --
-
-_PS: Cảm hứng đến từ [MV](https://www.youtube.com/watch?v=Om75ZrBSTco) này._
+PS: Cảm hứng đến từ [MV](https://www.youtube.com/watch?v=Om75ZrBSTco) này.

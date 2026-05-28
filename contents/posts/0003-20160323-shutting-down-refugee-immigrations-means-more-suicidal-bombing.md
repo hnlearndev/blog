@@ -9,7 +9,7 @@ The act of terrorism is backed by a meticulous and insidious calculation. Suicid
 
 ## A destructive approach
 
-In an effort to counter IS expansion, among various solutions, one suggests to shut down all refugee immigration. Clearly, those who advocate this policy have their heart and mind shadowed in fear.  Because it will only exacerbate the situation. Just imagine a Syrian father of two who wants to get away from IS and their wars must stay stuck. Eventually, if he does not fight for the radical belief, he will fight for bread and butter to feed himself and his family. That easily, we fall into the trap, we help them ticking box (1) and (2).
+In an effort to counter IS expansion, among various solutions, one suggests to shut down all refugee immigration. Clearly, those who advocate this policy have their heart and mind shadowed in fear. Because it will only exacerbate the situation. Just imagine a Syrian father of two who wants to get away from IS and their wars must stay stuck. Eventually, if he does not fight for the radical belief, he will fight for bread and butter to feed himself and his family. That easily, we fall into the trap, we help them ticking box (1) and (2).
 
 ## Where is a sensible solution?
 
@@ -21,10 +21,10 @@ Understanding the hardship they confront, I am still deeply saddened while obser
 
 Like a chess game, IS’ moves are planned, set and rolled into action. On the other side of table, we read them all but hesitate to resist. We argue, conflict over minimal short-term benefits among ourselves. We even let other suffer for the sake of our goods.
 
-Keep in mind, this is a war of believes. We are fighting for the liberal values of freedom, femininity, humanity,religions etc. that we believe. In struggles to protect those, the extreme solutions such as shutting down refugee immigration might just as well eradicate what we have stood for. Yes,  as viciously as our enemy is capable of.
+Keep in mind, this is a war of believes. We are fighting for the liberal values of freedom, femininity, humanity,religions etc. that we believe. In struggles to protect those, the extreme solutions such as shutting down refugee immigration might just as well eradicate what we have stood for. Yes, as viciously as our enemy is capable of.
 
 This war will not be without guns, bullets and blood but it will never end with those. If our belief is righteous, let it be the winner. Let it pave our solutions to the end of this madness with kindness and warm hearts.
 
 My heart stands with Brussels and her people.
 
-For the smiles that never fade, the hopes that never die and the peace that will surviv
+For the smiles that never fade, the hopes that never die and the peace that will survive...
