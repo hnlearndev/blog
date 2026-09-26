@@ -11,6 +11,8 @@
 
 The final product is [williannguyen.com](https://williannguyen.com).
 
+Meanwhile, I am using this link instead of my favorite domain [fly app direct link](https://blog-wtb-9980.fly.dev/).
+
 Full personal reflection on this project can be found on this [post](https://williannguyen.com/posts/4).
 
 **Note:**
